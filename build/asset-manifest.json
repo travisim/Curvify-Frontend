@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Curvify/static/css/main.cbc512fe.css",
+    "main.js": "/Curvify/static/js/main.d7f82df6.js",
+    "static/js/453.68693753.chunk.js": "/Curvify/static/js/453.68693753.chunk.js",
+    "index.html": "/Curvify/index.html",
+    "main.cbc512fe.css.map": "/Curvify/static/css/main.cbc512fe.css.map",
+    "main.d7f82df6.js.map": "/Curvify/static/js/main.d7f82df6.js.map",
+    "453.68693753.chunk.js.map": "/Curvify/static/js/453.68693753.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cbc512fe.css",
+    "static/js/main.d7f82df6.js"
+  ]
+}
