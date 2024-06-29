@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Curvify/static/css/main.cbc512fe.css",
-    "main.js": "/Curvify/static/js/main.d7f82df6.js",
-    "static/js/453.68693753.chunk.js": "/Curvify/static/js/453.68693753.chunk.js",
-    "index.html": "/Curvify/index.html",
-    "main.cbc512fe.css.map": "/Curvify/static/css/main.cbc512fe.css.map",
-    "main.d7f82df6.js.map": "/Curvify/static/js/main.d7f82df6.js.map",
-    "453.68693753.chunk.js.map": "/Curvify/static/js/453.68693753.chunk.js.map"
+    "main.css": "/static/css/main.be491145.css",
+    "main.js": "/static/js/main.ec32cb2c.js",
+    "static/js/453.68693753.chunk.js": "/static/js/453.68693753.chunk.js",
+    "index.html": "/index.html",
+    "main.be491145.css.map": "/static/css/main.be491145.css.map",
+    "main.ec32cb2c.js.map": "/static/js/main.ec32cb2c.js.map",
+    "453.68693753.chunk.js.map": "/static/js/453.68693753.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cbc512fe.css",
-    "static/js/main.d7f82df6.js"
+    "static/css/main.be491145.css",
+    "static/js/main.ec32cb2c.js"
   ]
 }

@@ -93,30 +93,46 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-        <MenuItem >
-
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-            <Typography
-              // component={Link} to="/forumThreads"
-            variant="h6"
-            noWrap
-            component="a"
-            href="/forumThreads"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-      
-          >
-            
-            Forum
-            </Typography>
-            </MenuItem>
+          <MenuItem>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%", // Ensure the container takes full width of the parent
+              }}
+            >
+              {/* Logo */}
+              <Box
+                component="img"
+                sx={{
+                  height: 50,
+                  width: 50,
+                  maxHeight: { xs: 233, md: 167 },
+                  maxWidth: { xs: 350, md: 250 },
+                  marginRight: "8px", // Add some space between the logo and the text
+                }}
+                alt="Logo"
+                src={process.env.PUBLIC_URL + "/AvoLogo.png"}
+              />
+              {/* Text */}
+              <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                href="/forumThreads"
+                sx={{
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  letterSpacing: ".1rem",
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                Curvify
+              </Typography>
+            </Box>
+          </MenuItem>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             {/* <IconButton
@@ -150,48 +166,35 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
-                  
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <MenuItem>
-         
-          <Typography 
-            variant="h5"
-            noWrap
-            component="a"
-            href="/forumThreads"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Forum
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/forumThreads"
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              Forum
             </Typography>
-        </MenuItem>
-            
-          <Box sx={{ flexGrow: 2, flexDirection: 'row' }}>
-            
-           
-          
-          
-          
-          </Box>
+          </MenuItem>
+
+          <Box sx={{ flexGrow: 2, flexDirection: "row" }}></Box>
           {displaySignInOutbuttons()}
-          <Box>
-           
-           
-              {displayLoginStatus()}
-            
-          </Box>
+          <Box>{displayLoginStatus()}</Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

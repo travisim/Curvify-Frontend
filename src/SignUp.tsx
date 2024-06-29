@@ -3,7 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [password_confirmation, setPasswordConfirmation] = useState<string>("");
   const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -18,6 +22,10 @@ const SignUp = () => {
     if (username.length === 0) return;
     const signInContent = {
       username,
+      name,
+      email,
+      password,
+      password_confirmation: password_confirmation,
     };
     // const token = document
     //   .querySelector('meta[name="csrf-token"]')
@@ -71,13 +79,61 @@ const SignUp = () => {
               <input
                 type="text"
                 name="name"
-                id="name"
+                id="username"
                 className="form-control"
                 required
                 onChange={(event) => onChange(event, setUsername)}
               />
             </div>
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                className="form-control"
+                required
+                onChange={(event) => onChange(event, setName)}
+              />
+            </div>
 
+            {/* Email Field */}
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                className="form-control"
+                required
+                onChange={(event) => onChange(event, setEmail)}
+              />
+            </div>
+
+            {/* Password Field */}
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                className="form-control"
+                required
+                onChange={(event) => onChange(event, setPassword)}
+              />
+            </div>
+            {/* Password confimation Field */}
+            <div className="form-group">
+              <label htmlFor="password">Password Confirmation</label>
+              <input
+                type="password"
+                name="password_confirmation"
+                id="password_confirmation"
+                className="form-control"
+                required
+                onChange={(event) => onChange(event, setPasswordConfirmation)}
+              />
+            </div>
             <button type="submit" className="btn btn-dark mt-3">
               Sign Up
             </button>
