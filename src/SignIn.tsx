@@ -26,7 +26,6 @@ const SignIn = () => {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (username.length === 0) return;
     const signInContent = {
       username,
       password,
@@ -51,7 +50,8 @@ const SignIn = () => {
         navigate(`/forumThreads`);
       })
     .catch(error => {
-      console.error('Error:', error);
+       setErrorMessage("An error occurred during login.");
+       setSnackbarOpen(true);
      
     });
   };

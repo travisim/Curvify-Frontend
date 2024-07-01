@@ -42,38 +42,28 @@ const SignUp = () => {
     fetch(url, {
       method: "POST",
       headers: {
-        // "X-CSRF-Token": token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(signInContent),
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.data,"dsaaaaaaaa");
-        if (data.error === "Username already exists") {
-          console.log("Username already exists");
-          setErrorMessage("Username already exists");
-          setSnackbarOpen(true);
-          throw new Error("Username already exists");
-        } else if (data.error === "Email already exists") {
-          console.log("Email already exists");
-          setErrorMessage("Email already exists");
-          setSnackbarOpen(true); // Assuming you have a mechanism to handle Snackbar visibility
-          throw new Error("Email already exists");
-        }else if (data.ok) {
+        console.log(data, "data");
+        if (!data.errors) {
           setIsUserCreated(true);
           setTimeout(() => {
             navigate(`/forumThreads`);
           }, 2000);
+        } else {
+          setErrorMessage(data.errors[0]);
+          setSnackbarOpen(true);
         }
-        })
-      .then((response) => {
-        setIsUserCreated(true);
-        setTimeout(() => {
-          navigate(`/forumThreads`);
-        }, 2000);
       })
-      .catch((error) => console.log(error.message));
+      .catch((error) => {
+        setErrorMessage(error.message || "An error occurred during sign up.");
+        setSnackbarOpen(true);
+      });
   };
 
   function displaySucessfullyCreatedAccountAlert() {
@@ -87,7 +77,7 @@ const SignUp = () => {
       );
     }
   }
-  
+
   const handleCloseSnackbar = (
     event?: React.SyntheticEvent,
     reason?: string
@@ -116,7 +106,7 @@ const SignUp = () => {
               {errorMessage}
             </Alert>
           </Snackbar>
-         
+
           {displaySucessfullyCreatedAccountAlert()}
           <form onSubmit={onSubmit}>
             <div className="form-group">
