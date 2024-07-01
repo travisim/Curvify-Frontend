@@ -42,10 +42,11 @@ const SignUp = () => {
     fetch(url, {
       method: "POST",
       headers: {
+        // "X-CSRF-Token": token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(signInContent),
-      credentials: "include",
+      // credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
