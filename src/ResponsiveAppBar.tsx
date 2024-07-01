@@ -35,7 +35,13 @@ function ResponsiveAppBar() {
 
   function handleLogout(){
     setUser(null)
-    localStorage.removeItem("token")
+    fetch("/logout", {
+      method: "POST",
+      credentials: "include", // Important to include credentials to ensure cookies are sent
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data.message))
+      .catch((error) => console.error("Error:", error));
     navigate(`/forumThreads`)
     console.log("logged out")
   }
