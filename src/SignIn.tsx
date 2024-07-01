@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, createContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./App";
+import { Snackbar, Alert } from "@mui/material"; 
 
 interface User {
   id: number;
@@ -13,6 +14,8 @@ const SignIn = () => {
   const [username, setUsername] = useState<string>("");
   const { user, setUser } = useContext(UserContext);
   const [password, setPassword] = useState<string>("");
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -39,12 +42,18 @@ const SignIn = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
-          alert("user does not exists");
+          setErrorMessage("Username or password is incorrect.");
+          setSnackbarOpen(true);
+          return
         }
         localStorage.setItem("token", data.token);
         setUser(data.user);
         navigate(`/forumThreads`);
-      });
+      })
+    .catch(error => {
+      console.error('Error:', error);
+     
+    });
   };
 
   return (
@@ -87,6 +96,19 @@ const SignIn = () => {
           </form>
         </div>
       </div>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
