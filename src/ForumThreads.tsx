@@ -122,7 +122,7 @@ const ForumThreads = (): JSX.Element => {
         <main className="container">
           <div className="text-end mb-3">
             <Link to="/newForumThread" className="btn btn-dark">
-              Create New Thread
+              Create New Post
             </Link>
           </div>
           <div className=" text-end mb-3">

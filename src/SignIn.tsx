@@ -12,6 +12,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const { user, setUser } = useContext(UserContext);
+  const [password, setPassword] = useState<string>("");
 
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -25,6 +26,7 @@ const SignIn = () => {
     if (username.length === 0) return;
     const signInContent = {
       username,
+      password,
     };
 
     fetch(`${process.env.REACT_APP_BACKEND_API_URL}/login`, {
@@ -62,13 +64,25 @@ const SignIn = () => {
                 onChange={(event) => onChange(event, setUsername)}
               />
             </div>
+            {/* Password Field */}
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                className="form-control"
+                required
+                onChange={(event) => onChange(event, setPassword)}
+              />
+            </div>
 
             <button type="submit" className="btn btn-dark mt-3">
               Sign In
             </button>
 
             <Link to="/forumThreads" className="btn btn-dark mt-3 ">
-              Back to threads
+              Back to posts
             </Link>
           </form>
         </div>

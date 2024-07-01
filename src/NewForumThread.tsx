@@ -75,7 +75,7 @@ const NewForumThread = () => {
     <div className="container mt-5">
       <div className="row">
         <div className="col-sm-12 col-lg-6 offset-lg-3">
-          <h1 className="font-weight-normal mb-5">Add a new Thread</h1>
+          <h1 className="font-weight-normal mb-5">Add a new post</h1>
           <form onSubmit={onSubmit}>
             <div className="form-group">
               <label htmlFor="title">Thread Title</label>
@@ -119,11 +119,11 @@ const NewForumThread = () => {
               />
             </div>
             <button type="submit" className="btn btn-dark mt-3">
-              Create Thread
+              Create post
             </button>
 
             <Link to="/forumThreads" className="btn btn-dark mt-3 ">
-              Back to threads
+              Back to posts
             </Link>
           </form>
         </div>

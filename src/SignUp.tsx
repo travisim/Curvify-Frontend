@@ -61,7 +61,7 @@ const SignUp = () => {
     } else {
       return (
         <div className="alert alert-success" role="alert">
-          Sucessfully created account! Redirecting to threads, please sign in...
+          Sucessfully created account! Redirecting to posts, please sign in...
         </div>
       );
     }
@@ -138,7 +138,7 @@ const SignUp = () => {
               Sign Up
             </button>
             <Link to="/forumThreads" className="btn btn-dark mt-3 ">
-              Back to threads
+              Back to posts
             </Link>
           </form>
         </div>
