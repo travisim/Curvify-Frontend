@@ -11,6 +11,7 @@ import SignUp from "./SignUp";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import EditForumThreadComment from "./EditForumThreadComment";
 import EditForumThread from "./EditForumThread";
+import About from "./About";
 import './App.css'
 interface User {
   id: number;
@@ -47,23 +48,24 @@ const App = () => {
   return (
     <div>
       <Router>
-          <UserContext.Provider value={{ user: user, setUser: setUser }}>
-              <ResponsiveAppBar />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/forumThreads" element={<ForumThreads />} />
-                <Route path="/signUp" element={<SignUp />} />
-                <Route path="/signIn" element={<SignIn />} />
-                <Route path="/newForumThread" element={<NewForumThread />} />
-              
-                <Route path="/forumThread/:id" element={<ForumThread />} />
-                <Route path="/EditForumThread/:id" element={<EditForumThread />} />
-                <Route path="/EditForumThreadComment/:id" element={<EditForumThreadComment />} />
-                
-             
-                 
-              </Routes>
-          </UserContext.Provider>
+        <UserContext.Provider value={{ user: user, setUser: setUser }}>
+          <ResponsiveAppBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/forumThreads" element={<ForumThreads />} />
+            <Route path="/signUp" element={<SignUp />} />
+            <Route path="/signIn" element={<SignIn />} />
+            <Route path="/newForumThread" element={<NewForumThread />} />
+            <Route path="/about" element={<About />} />
+
+            <Route path="/forumThread/:id" element={<ForumThread />} />
+            <Route path="/EditForumThread/:id" element={<EditForumThread />} />
+            <Route
+              path="/EditForumThreadComment/:id"
+              element={<EditForumThreadComment />}
+            />
+          </Routes>
+        </UserContext.Provider>
       </Router>
     </div>
   );

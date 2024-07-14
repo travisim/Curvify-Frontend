@@ -18,7 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 
 
-const pages = ["Products"];
+const pages = ["About"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
@@ -49,15 +49,17 @@ function ResponsiveAppBar() {
   function displaySignInOutbuttons() {
     if (user === null) {
       return (
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <MenuItem component={Link} to="/about">
+            <Typography textAlign="center">About</Typography>
+          </MenuItem>
+          <MenuItem component={Link} to="/signIn">
+            <Typography textAlign="center">Sign In</Typography>
+          </MenuItem>
 
-        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <MenuItem component={Link} to="/signIn">
-          <Typography textAlign="center">Sign In</Typography>
-        </MenuItem>
-
-        <MenuItem component={Link} to="/signUp">
-          <Typography textAlign="center">Sign up</Typography>
-        </MenuItem>
+          <MenuItem component={Link} to="/signUp">
+            <Typography textAlign="center">Sign up</Typography>
+          </MenuItem>
         </Box>
       );
     }
@@ -137,8 +139,11 @@ function ResponsiveAppBar() {
               >
                 Curvify
               </Typography>
+              
             </Box>
+            
           </MenuItem>
+        
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             {/* <IconButton
@@ -151,6 +156,7 @@ function ResponsiveAppBar() {
             >
               <MenuIcon />
             </IconButton> */}
+            
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
