@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,11 +10,15 @@ import MenuItem from "@mui/material/MenuItem";
 import { UserContext } from "./App";
 // import { Link } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 
 import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+
+import {
+  Brightness4 as Brightness4Icon,
+  Brightness7 as Brightness7Icon,
+  Settings as SettingsIcon,
+} from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -27,31 +31,32 @@ import {
 import { useContext, useMemo } from "react";
 import { ThemeContext } from "./theme/index";
 
-
 const pages = ["About"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile"]; //, "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
 
-    const theme = useTheme();
-    const { switchColorMode } = useContext(ThemeContext);
-    const activateName = useMemo(
-      () => (theme.palette.mode === "dark" ? "Light" : "Dark"),
-      [theme]
-    );
+  const theme = useTheme();
+  const { switchColorMode } = useContext(ThemeContext);
+  const activateName = useMemo(
+    () => (theme.palette.mode === "dark" ? "Light" : "Dark"),
+    [theme]
+  );
 
   const { user, setUser } = React.useContext(UserContext);
   function displayLoginStatus() {
     if (user === null) {
-      return(  <Typography textAlign="center"></Typography>);
+      return <Typography textAlign="center"></Typography>;
     } else {
-      return(<Typography textAlign="center">Welcome back {user.username}</Typography>) ;
+      return (
+        <Typography textAlign="center">Welcome back {user.username}</Typography>
+      );
     }
   }
 
-  function handleLogout(){
-    setUser(null)
+  function handleLogout() {
+    setUser(null);
     fetch("/logout", {
       method: "POST",
       credentials: "include", // Important to include credentials to ensure cookies are sent
@@ -59,10 +64,9 @@ function ResponsiveAppBar() {
       .then((response) => response.json())
       .then((data) => console.log(data.message))
       .catch((error) => console.error("Error:", error));
-    navigate(`/forumThreads`)
-    console.log("logged out")
+    navigate(`/forumThreads`);
+    console.log("logged out");
   }
-  
 
   function displaySignInOutbuttons() {
     if (user === null) {
@@ -77,16 +81,13 @@ function ResponsiveAppBar() {
           </MenuItem>
         </Box>
       );
-    }
-    else {
-     
+    } else {
       return (
-        <MenuItem onClick={handleLogout } >
-      <Typography textAlign="center">Logout</Typography>
-      </MenuItem>
+        <MenuItem onClick={handleLogout}>
+          <Typography textAlign="center">Logout</Typography>
+        </MenuItem>
       );
     }
-    
   }
   //   console.log(displayLoginStatus());
 
@@ -157,12 +158,16 @@ function ResponsiveAppBar() {
             </Box>
           </MenuItem>
 
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-           
+          {pages.map((page) => (
+            <MenuItem
+              component={Link}
+              to={`/${page.toLowerCase()}`}
+              key={page}
+              onClick={handleCloseNavMenu}
+            >
+              <Typography textAlign="center">{page}</Typography>
+            </MenuItem>
+          ))}
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             {/* <IconButton
@@ -228,11 +233,32 @@ function ResponsiveAppBar() {
           <Box>{displayLoginStatus()}</Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* <Avatar alt="Remy Sharp" static/images/avatar/2src="/static/images/avatar/2.jpg" /> */}
+            <Tooltip title="Toggle Dark/Light Mode">
+              <IconButton
+                sx={{ mr: 1 }}
+                onClick={switchColorMode}
+                color="inherit"
+              >
+                {theme.palette.mode === "dark" ? (
+                  <Brightness7Icon />
+                ) : (
+                  <Brightness4Icon />
+                )}
               </IconButton>
             </Tooltip>
+            <Tooltip title="Settings">
+              <IconButton
+                sx={{ mr: 1 }}
+                color="inherit"
+                component={Link}
+                to="/settings"
+              >
+                <SettingsIcon />
+              </IconButton>
+            </Tooltip>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              {/* <Avatar alt="Remy Sharp" static/images/avatar/2src="/static/images/avatar/2.jpg" /> */}
+            </IconButton>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -257,14 +283,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          <IconButton sx={{ ml: 1 }} onClick={switchColorMode} color="inherit">
-            {theme.palette.mode === "dark" ? (
-              <Brightness7Icon />
-            ) : (
-              <Brightness4Icon />
-            )}
-          </IconButton>
-          {/* <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -292,7 +311,7 @@ function ResponsiveAppBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box> */}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>

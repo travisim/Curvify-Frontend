@@ -12,11 +12,13 @@ import ResponsiveAppBar from "./ResponsiveAppBar";
 import EditForumThreadComment from "./EditForumThreadComment";
 import EditForumThread from "./EditForumThread";
 import About from "./About";
+import Settings from "./Settings";
 import './App.css'
 
 interface User {
   id: number;
   username: string;
+  email: string;
   created_at: string;
   updated_at: string;
 }
@@ -67,6 +69,7 @@ const App = () => {
               path="/EditForumThreadComment/:id"
               element={<EditForumThreadComment />}
             />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </UserContext.Provider>
       </Router>
