@@ -68,9 +68,6 @@ function ResponsiveAppBar() {
     if (user === null) {
       return (
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <MenuItem component={Link} to="/about">
-            <Typography textAlign="center">About</Typography>
-          </MenuItem>
           <MenuItem component={Link} to="/signIn">
             <Typography textAlign="center">Sign In</Typography>
           </MenuItem>
@@ -159,6 +156,13 @@ function ResponsiveAppBar() {
               </Typography>
             </Box>
           </MenuItem>
+
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+           
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             {/* <IconButton
