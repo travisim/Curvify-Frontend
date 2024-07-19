@@ -19,10 +19,18 @@ export const ThemeContext = createContext<ThemeContextType>({
 });
 
 export function ThemeContextProvider({ children }: ThemeProviderProps) {
-  const [mode, setMode] = useState<"light" | "dark">("light");
+  // Initialize theme mode from localStorage or default to "light"
+  const [mode, setMode] = useState<"light" | "dark">(() => {
+    const savedMode = localStorage.getItem("themeMode");
+    return savedMode === "dark" ? "dark" : "light";
+  });
 
   const switchColorMode = () => {
-    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+    setMode((prevMode) => {
+      const newMode = prevMode === "light" ? "dark" : "light";
+      localStorage.setItem("themeMode", newMode); // Save new mode to localStorage
+      return newMode;
+    });
   };
 
   const theme = useMemo(

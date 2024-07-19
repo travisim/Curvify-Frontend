@@ -1,22 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom";
 
-let Home = () => (
-  <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
-    <div className="jumbotron jumbotron-fluid bg-transparent">
-      <div className="container secondary-color">
-        <h1 className="display-4">Curvify</h1>
-        <p className="lead">
-          Make mutually beneficial exchanges in by bartering or using AvoCurve
-          coins.
-        </p>
-        <hr className="my-4" />
-        <Link to="/forumThreads" className="btn btn-lg btn-dark" role="button">
-          View Posts
-        </Link>
-      </div>
-    </div>
-  </div>
-);
+
+import React from "react";
+import { Container, Box, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+
+const Home = () => {
+  const theme = useTheme();
+  const textColor = theme.palette.mode === "dark" ? "white" : "black";
+
+  return (
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.default",
+      }}
+    >
+      <Container maxWidth="md">
+        <Box sx={{ bgcolor: "transparent" }}>
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            sx={{ color: textColor }}
+          >
+            Curvify
+          </Typography>
+          <Typography variant="h5" paragraph sx={{ color: textColor }}>
+            Make mutually beneficial exchanges in by bartering or using AvoCurve
+            coins.
+          </Typography>
+          <Box sx={{ my: 4 }}>
+            <Button
+              component={Link}
+              to="/forumThreads"
+              variant="contained"
+              color="secondary"
+              size="large"
+            >
+              View Posts
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
 
 export default Home;
