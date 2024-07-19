@@ -1,26 +1,56 @@
 import React from "react";
+import { Container, Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 
-let About = () => (
-  <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
-    <div className="jumbotron jumbotron-fluid bg-transparent">
-      <div className="container secondary-color">
-        <h1 className="display-4">About</h1>
-        <p className="lead">
-          This project was driven by a realization that for some modules
-          (BSP1702) require students to buy a physical textbook for use in the
-          finals and the use of a printed pdf copy of the textbook would be
-          prohibited. Additionally, since university students are cash strapped,
-          bartering for textbooks/notes would be a way to increase liquidity in
-          this market place.
-        </p>
-        <hr className="my-4" />
-        <Link to="/forumThreads" className="btn btn-lg btn-dark" role="button">
-          View Posts
-        </Link>
-      </div>
-    </div>
-  </div>
-);
+const About = () => {
+  const theme = useTheme();
+  const textColor = theme.palette.mode === "dark" ? "white" : "black";
+
+  return (
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.default",
+      }}
+    >
+      <Container maxWidth="md">
+        <Box sx={{ bgcolor: "transparent" }}>
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            sx={{ color: textColor }}
+          >
+            About
+          </Typography>
+          <Typography variant="h5" paragraph sx={{ color: textColor }}>
+            This project was driven by a realization that for some modules
+            (BSP1702) require students to buy a physical textbook for use in the
+            finals and the use of a printed pdf copy of the textbook would be
+            prohibited. Additionally, since university students are cash
+            strapped, bartering for textbooks/notes would be a way to increase
+            liquidity in this market place.
+          </Typography>
+          <Box sx={{ my: 4 }}>
+            <Button
+              component={Link}
+              to="/forumThreads"
+              variant="contained"
+              color="secondary"
+              size="large"
+            >
+              View Posts
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
 
 export default About;
