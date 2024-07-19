@@ -1,15 +1,10 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 // import AdbIcon from '@mui/icons-material/Adb';
 import { UserContext } from "./App";
@@ -17,12 +12,34 @@ import { UserContext } from "./App";
 import { Link, useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 
+import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import {
+  AppBar,
+  Box,
+  Container,
+  IconButton,
+  Toolbar,
+  Tooltip,
+  useTheme,
+} from "@mui/material";
+import { useContext, useMemo } from "react";
+import { ThemeContext } from "./theme/index";
+
 
 const pages = ["About"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
+
+    const theme = useTheme();
+    const { switchColorMode } = useContext(ThemeContext);
+    const activateName = useMemo(
+      () => (theme.palette.mode === "dark" ? "Light" : "Dark"),
+      [theme]
+    );
 
   const { user, setUser } = React.useContext(UserContext);
   function displayLoginStatus() {
@@ -45,6 +62,7 @@ function ResponsiveAppBar() {
     navigate(`/forumThreads`)
     console.log("logged out")
   }
+  
 
   function displaySignInOutbuttons() {
     if (user === null) {
@@ -139,11 +157,8 @@ function ResponsiveAppBar() {
               >
                 Curvify
               </Typography>
-              
             </Box>
-            
           </MenuItem>
-        
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             {/* <IconButton
@@ -156,7 +171,7 @@ function ResponsiveAppBar() {
             >
               <MenuIcon />
             </IconButton> */}
-            
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -200,7 +215,7 @@ function ResponsiveAppBar() {
                 textDecoration: "none",
               }}
             >
-              Forum
+              Curvify
             </Typography>
           </MenuItem>
 
@@ -238,6 +253,13 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
+          <IconButton sx={{ ml: 1 }} onClick={switchColorMode} color="inherit">
+            {theme.palette.mode === "dark" ? (
+              <Brightness7Icon />
+            ) : (
+              <Brightness4Icon />
+            )}
+          </IconButton>
           {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

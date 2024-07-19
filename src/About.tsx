@@ -7,7 +7,12 @@ let About = () => (
       <div className="container secondary-color">
         <h1 className="display-4">About</h1>
         <p className="lead">
-        this page 
+          This project was driven by a realization that for some modules
+          (BSP1702) require students to buy a physical textbook for use in the
+          finals and the use of a printed pdf copy of the textbook would be
+          prohibited. Additionally, since university students are cash strapped,
+          bartering for textbooks/notes would be a way to increase liquidity in
+          this market place.
         </p>
         <hr className="my-4" />
         <Link to="/forumThreads" className="btn btn-lg btn-dark" role="button">

@@ -13,6 +13,7 @@ import EditForumThreadComment from "./EditForumThreadComment";
 import EditForumThread from "./EditForumThread";
 import About from "./About";
 import './App.css'
+
 interface User {
   id: number;
   username: string;
@@ -45,6 +46,8 @@ const App = () => {
   //   console.log("logged out");
   // }
 
+
+  
   return (
     <div>
       <Router>
