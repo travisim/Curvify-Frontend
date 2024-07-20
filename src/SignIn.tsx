@@ -61,59 +61,74 @@ const SignIn = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-sm-12 col-lg-6 offset-lg-3">
-          <h1 className="font-weight-normal mb-5">Sign In</h1>
-          <form onSubmit={onSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Username</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="form-control"
-                required
-                onChange={(event) => onChange(event, setUsername)}
-              />
-            </div>
-            {/* Password Field */}
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                className="form-control"
-                required
-                onChange={(event) => onChange(event, setPassword)}
-              />
-            </div>
-
-            <button type="submit" className="btn btn-dark mt-3">
-              Sign In
-            </button>
-
-            <Link to="/forumThreads" className="btn btn-dark mt-3 ">
-              Back to posts
-            </Link>
-          </form>
-        </div>
-      </div>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarOpen(false)}
-      >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
+    <Container component="main" maxWidth="sm" sx={{ mt: 8 }}>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        p: 2,
+        bgcolor: theme.palette.background.paper, // Adapts to theme background
+        boxShadow: 3,
+        borderRadius: 2
+      }}>
+        <Typography component="h1" variant="h5" sx={{ color: theme.palette.text.primary }}>
+          Sign In
+        </Typography>
+        <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 1 }}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+          <Link to="/forumThreads" style={{ textDecoration: 'none', color: theme.palette.text.primary }}>
+            <Button
+              fullWidth
+              variant="outlined"
+              sx={{ mt: 1 }}
+            >
+              Back to Posts
+            </Button>
+          </Link>
+        </Box>
+      </Box>
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+        <Alert onClose={() => setSnackbarOpen(false)} severity="error" sx={{ width: '100%' }}>
           {errorMessage}
         </Alert>
       </Snackbar>
-    </div>
+    </Container>
   );
 };
 
