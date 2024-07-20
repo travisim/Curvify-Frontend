@@ -1,7 +1,7 @@
 import React, { useState, useContext, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./App";
-import { Container, Box, Typography, TextField, Button, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+import { Container, Box, Typography, TextField, Button, MenuItem, Select, FormControl, InputLabel, TextareaAutosize } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 
@@ -77,63 +77,54 @@ const NewForumThread = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-sm-12 col-lg-6 offset-lg-3">
-          <h1 className="font-weight-normal mb-5">Add a new post</h1>
-          <form onSubmit={onSubmit}>
-            <div className="form-group">
-              <label htmlFor="title">Thread Title</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                className="form-control"
-                required
-                onChange={(event) => onChange(event, setTitle)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="category">Category</label>
-              <select
-                name="category"
-                id="category"
-                className="form-control"
-                required
-                onChange={(event) => onChange(event, setCategory)}
-                defaultValue="Barter"
-              >
-                <option value="Barter">Barter</option>
-                <option value="Buy with AvoCurve Coin">
-                  Buy with AvoCurve Coin
-                </option>
-                <option value="Off-Advice">Off-Advice</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="body"> body</label>
-              <textarea
-                className="form-control"
-                id="body"
-                name="body"
-                rows={5}
-                required
-                onChange={(event) => onChange(event, setBody)}
-              />
-            </div>
-            <button type="submit" className="btn btn-dark mt-3">
-              Create post
-            </button>
-
-            <Link to="/forumThreads" className="btn btn-dark mt-3 ">
-              Back to posts
-            </Link>
-          </form>
-        </div>
-      </div>
-    </div>
+    <Container component="main" maxWidth="md" sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        Add a New Post
+      </Typography>
+      <form onSubmit={onSubmit}>
+        <FormControl fullWidth margin="normal">
+          <TextField
+            label="Thread Title"
+            variant="outlined"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </FormControl>
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Category</InputLabel>
+          <Select
+            value={category}
+            label="Category"
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          >
+            <MenuItem value="Barter">Barter</MenuItem>
+            <MenuItem value="Buy with AvoCurve Coin">Buy with AvoCurve Coin</MenuItem>
+            <MenuItem value="Off-Advice">Off-Advice</MenuItem>
+            <MenuItem value="Other">Other</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Body</InputLabel>
+          <TextareaAutosize
+            minRows={5}
+            style={{ width: '100%' }}
+            required
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+          />
+        </FormControl>
+        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+          Create Post
+        </Button>
+        <Link to="/forumThreads" style={{ textDecoration: 'none' }}>
+          <Button variant="outlined" sx={{ mt: 2, ml: 2 }}>
+            Back to Posts
+          </Button>
+        </Link>
+      </form>
+    </Container>
   );
 };
 
