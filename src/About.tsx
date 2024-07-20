@@ -1,12 +1,8 @@
 import React from "react";
 import { Container, Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
 
 const About = () => {
-  const theme = useTheme();
-  const textColor = theme.palette.mode === "dark" ? "white" : "black";
-
   return (
     <Box
       sx={{
@@ -24,11 +20,11 @@ const About = () => {
             variant="h2"
             component="h1"
             gutterBottom
-            sx={{ color: textColor }}
+            color="text.primary"
           >
             About
           </Typography>
-          <Typography variant="h5" paragraph sx={{ color: textColor }}>
+          <Typography variant="h5" paragraph color="text.secondary">
             This project was driven by a realization that for some modules
             (BSP1702) require students to buy a physical textbook for use in the
             finals and the use of a printed pdf copy of the textbook would be

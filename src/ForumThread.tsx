@@ -5,7 +5,6 @@ import { UserContext } from "./App";
 import TimeAgo from "react-timeago";
 import { useTheme } from "@mui/material/styles";
 
-
 interface ForumThreadStorage {
   title: string;
   body: string;
