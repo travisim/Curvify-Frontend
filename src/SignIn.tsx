@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext, createContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./App";
-import { Snackbar, Alert } from "@mui/material"; 
+import { Snackbar, Alert, TextField, Button, Typography, Container, Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
 
 interface User {
   id: number;
@@ -11,6 +13,8 @@ interface User {
 }
 const SignIn = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const textColor = theme.palette.mode === "dark" ? "white" : "black";
   const [username, setUsername] = useState<string>("");
   const { user, setUser } = useContext(UserContext);
   const [password, setPassword] = useState<string>("");

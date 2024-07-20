@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Container, Card, CardContent, Typography, Button, Select, MenuItem, FormControl, InputLabel, Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // import { UserContext } from "./App";
 import TimeAgo from "react-timeago";
 
@@ -12,6 +14,8 @@ interface ForumThread {
 }
 const ForumThreads = (): JSX.Element => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const textColor = theme.palette.mode === "dark" ? "white" : "black";
   const [forumThreads, setForumThreads] = useState<JSX.Element[]>([]);
   const [currentFilter, setCurrentFilter] = useState<string>("All");
   // const { user, setUser } = useContext(UserContext);

@@ -1,6 +1,9 @@
 import React, { useState, useContext, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./App";
+import { Container, Box, Typography, TextField, Button, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
 
 const NewForumThread = () => {
   const navigate = useNavigate();
@@ -8,6 +11,8 @@ const NewForumThread = () => {
   const [category, setCategory] = useState<string>("Barter");
   const [body, setBody] = useState<string>("");
   const { user, setUser } = useContext(UserContext);
+  const theme = useTheme();
+  const textColor = theme.palette.mode === "dark" ? "white" : "black";
 
   const stripHtmlEntities = (str: string) => {
     return String(str)

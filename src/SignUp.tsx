@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext, createContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Snackbar, Alert } from "@mui/material"; // Import Alert from MUI
+import { Container, Box, Typography, TextField, Button, Snackbar, Alert, useTheme } from "@mui/material";// Import Alert from MUI
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const textColor = theme.palette.mode === "dark" ? "white" : "black";
   const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -90,96 +92,99 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-sm-12 col-lg-6 offset-lg-3">
-          <h1 className="font-weight-normal mb-5">Sign Up</h1>
-          <Snackbar
-            open={snackbarOpen}
-            autoHideDuration={6000}
-            onClose={handleCloseSnackbar}
+    <Container component="main" maxWidth="sm">
+      <Box sx={{
+        marginTop: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        bgcolor: theme.palette.background.default,
+        padding: 3,
+        borderRadius: 1,
+        boxShadow: 3,
+      }}>
+        <Typography component="h1" variant="h5">
+          Sign Up
+        </Typography>
+        <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="new-password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="passwordConfirmation"
+            label="Confirm Password"
+            type="password"
+            id="passwordConfirmation"
+            value={password_confirmation}
+            onChange={e => setPasswordConfirmation(e.target.value)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
           >
-            <Alert
-              onClose={handleCloseSnackbar}
-              severity="error"
-              sx={{ width: "100%" }}
-            >
-              {errorMessage}
-            </Alert>
-          </Snackbar>
-
-          {displaySucessfullyCreatedAccountAlert()}
-          <form onSubmit={onSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Username</label>
-              <input
-                type="text"
-                name="name"
-                id="username"
-                className="form-control"
-                required
-                onChange={(event) => onChange(event, setUsername)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="form-control"
-                required
-                onChange={(event) => onChange(event, setName)}
-              />
-            </div>
-
-            {/* Email Field */}
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="form-control"
-                required
-                onChange={(event) => onChange(event, setEmail)}
-              />
-            </div>
-
-            {/* Password Field */}
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                className="form-control"
-                required
-                onChange={(event) => onChange(event, setPassword)}
-              />
-            </div>
-            {/* Password confimation Field */}
-            <div className="form-group">
-              <label htmlFor="password">Password Confirmation</label>
-              <input
-                type="password"
-                name="password_confirmation"
-                id="password_confirmation"
-                className="form-control"
-                required
-                onChange={(event) => onChange(event, setPasswordConfirmation)}
-              />
-            </div>
-            <button type="submit" className="btn btn-dark mt-3">
-              Sign Up
-            </button>
-            <Link to="/forumThreads" className="btn btn-dark mt-3 ">
-              Back to posts
-            </Link>
-          </form>
-        </div>
-      </div>
-    </div>
+            Sign Up
+          </Button>
+          <Link to="/forumThreads" style={{ textDecoration: 'none' }}>
+            <Button variant="outlined" sx={{ mt: 2 }} fullWidth>
+              Back to Posts
+            </Button>
+          </Link>
+        </Box>
+      </Box>
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+        <Alert onClose={() => setSnackbarOpen(false)} severity="error" sx={{ width: '100%' }}>
+          {errorMessage}
+        </Alert>
+      </Snackbar>
+    </Container>
   );
 };
 

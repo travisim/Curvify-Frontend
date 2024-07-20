@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import TextField from "@mui/material/TextField";
+import { TextField, Button, Container, Typography, Box, Paper } from "@mui/material";
 import { UserContext } from "./App";
 import TimeAgo from "react-timeago";
+import { useTheme } from "@mui/material/styles";
+
 
 interface ForumThreadStorage {
   title: string;
@@ -30,6 +32,8 @@ interface UserStorage {
 }
 // {id: 2, username: 'dean', created_at: '2024-01-24T00:34:20.363Z', updated_at: '2024-01-24T00:34:20.363Z'}
 const ForumThread = (): JSX.Element => {
+  const theme = useTheme();
+  const textColor = theme.palette.mode === "dark" ? "white" : "black";
   const params = useParams();
   const navigate = useNavigate();
   const [forumThread, setForumThread] = useState<ForumThreadStorage>({

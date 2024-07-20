@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 
 interface ForumThread {
   title: string;
@@ -8,6 +9,8 @@ interface ForumThread {
 }
 
 const EditForumThread: React.FC = () => {
+  const theme = useTheme();
+  const textColor = theme.palette.mode === "dark" ? "white" : "black";
   const params = useParams();
   const navigate = useNavigate();
   const [forumThread, setForumThread] = useState<ForumThread>({

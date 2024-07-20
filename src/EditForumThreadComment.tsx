@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { Container, Box, TextField, Button, Typography, useTheme } from "@mui/material";
 
 interface ForumThreadCommentStorage {
   forum_thread_id: any;
@@ -13,6 +14,8 @@ interface ForumThreadCommentStorage {
 const EditForumThreadComment = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const textColor = theme.palette.mode === "dark" ? "white" : "black";
   const [forumThreadComment, setForumThreadComment] =
     useState<ForumThreadCommentStorage>();
 
