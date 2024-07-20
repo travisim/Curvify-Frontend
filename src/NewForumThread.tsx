@@ -1,9 +1,19 @@
 import React, { useState, useContext, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./App";
-import { Container, Box, Typography, TextField, Button, MenuItem, Select, FormControl, InputLabel, TextareaAutosize } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  TextareaAutosize,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
 
 const NewForumThread = () => {
   const navigate = useNavigate();
@@ -61,7 +71,7 @@ const NewForumThread = () => {
       method: "POST",
       headers: {
         // "X-CSRF-Token": token,
-        "Author":"dwwd",
+        Author: "dwwd",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(forumThreadContent),
@@ -77,54 +87,74 @@ const NewForumThread = () => {
   };
 
   return (
-    <Container component="main" maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Add a New Post
-      </Typography>
-      <form onSubmit={onSubmit}>
-        <FormControl fullWidth margin="normal">
-          <TextField
-            label="Thread Title"
-            variant="outlined"
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </FormControl>
-        <FormControl fullWidth margin="normal">
-          <InputLabel>Category</InputLabel>
-          <Select
-            value={category}
-            label="Category"
-            onChange={(e) => setCategory(e.target.value)}
-            required
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.default",
+      }}
+    >
+      <Container maxWidth="sm" sx={{ mt: 0 }}>
+        <Typography variant="h2" component="h1" color="text.primary">
+          Add a New Post
+        </Typography>
+        <form onSubmit={onSubmit}>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Thread Title"
+              variant="outlined"
+              required
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Category</InputLabel>
+            <Select
+              value={category}
+              label="Category"
+              onChange={(e) => setCategory(e.target.value)}
+              required
+            >
+              <MenuItem value="Barter">Barter</MenuItem>
+              <MenuItem value="Buy with AvoCurve Coin">
+                Buy with AvoCurve Coin
+              </MenuItem>
+              <MenuItem value="Off-Advice">Off-Advice</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Body"
+              variant="outlined"
+              multiline
+              minRows={5}
+              required
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+            />
+          </FormControl>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }}
           >
-            <MenuItem value="Barter">Barter</MenuItem>
-            <MenuItem value="Buy with AvoCurve Coin">Buy with AvoCurve Coin</MenuItem>
-            <MenuItem value="Off-Advice">Off-Advice</MenuItem>
-            <MenuItem value="Other">Other</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl fullWidth margin="normal">
-          <InputLabel>Body</InputLabel>
-          <TextareaAutosize
-            minRows={5}
-            style={{ width: '100%' }}
-            required
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
-        </FormControl>
-        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-          Create Post
-        </Button>
-        <Link to="/forumThreads" style={{ textDecoration: 'none' }}>
-          <Button variant="outlined" sx={{ mt: 2, ml: 2 }}>
-            Back to Posts
+            Create Post
           </Button>
-        </Link>
-      </form>
-    </Container>
+          <Link to="/forumThreads" style={{ textDecoration: "none" }}>
+            <Button variant="outlined" sx={{ mt: 2, ml: 2 }}>
+              Back to Posts
+            </Button>
+          </Link>
+        </form>
+      </Container>
+    </Box>
   );
 };
 

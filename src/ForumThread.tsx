@@ -4,6 +4,44 @@ import { TextField, Button, Container, Typography, Box, Paper } from "@mui/mater
 import { UserContext } from "./App";
 import TimeAgo from "react-timeago";
 import { useTheme } from "@mui/material/styles";
+import { Card, CardContent, CardActions,Grid } from "@mui/material";
+
+import { styled } from "@mui/system";
+
+const StyledHero = styled(Box)(({ theme }) => ({
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "white",
+  padding: theme.spacing(4),
+}));
+
+const Overlay = styled(Box)({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+});
+
+const StyledContent = styled(Box)({
+  position: "relative",
+  zIndex: 1,
+});
+
+const StyledForm = styled("form")({
+  position: "relative",
+});
+
+const StyledButton = styled(Button)({
+  position: "absolute",
+  bottom: 8,
+  right: 8,
+});
+
 
 interface ForumThreadStorage {
   title: string;
@@ -185,29 +223,56 @@ const ForumThread = (): JSX.Element => {
   ): JSX.Element[] => {
     const allForumThreadComments = forumThreadComments.map(
       (forumThreadComments, index) => (
-        <div key={index} className="">
-          <div className="card mb-4">
-            <div className="card-body  col-lg-10">
-              <h4
-                className="card-text"
-                dangerouslySetInnerHTML={{
-                  __html: `${addHtmlEntities(forumThreadComments.body)}`,
-                }}
-              ></h4>
-              <p>{forumThreadComments.author}</p>
+        <Card key={index} variant="outlined" sx={{ mb: 3 }}>
+          <CardContent>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ whiteSpace: "pre-line" }}
+              dangerouslySetInnerHTML={{
+                __html: forumThreadComments.body.replace(
+       /&lt;br&gt; &lt;br&gt;/g,
+                  "<br>"
+                ),
+              }}
+            />
+
+            <Typography variant="body2" color="text.secondary">
+              {forumThreadComments.author}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
               <TimeAgo date={forumThread.created_at} />
-            </div>
-            <div
-              className="card-body  text-right  btn-toolbar "
-              style={{ width: "18rem" }}
-            >
-              {AccessControlComments(
-                forumThreadComments.user_id,
-                forumThreadComments.id
-              )}
-            </div>
-          </div>
-        </div>
+            </Typography>
+            {AccessControlComments(
+              forumThreadComments.user_id,
+              forumThreadComments.id
+            )}
+          </CardContent>
+        </Card>
+
+        //   <div key={index} className="">
+        //   <div className="card mb-4">
+        //     <div className="card-body  col-lg-10">
+        //       <h4
+        //         className="card-text"
+        //         dangerouslySetInnerHTML={{
+        //           __html: `${addHtmlEntities(forumThreadComments.body)}`,
+        //         }}
+        //       ></h4>
+        //       <p>{forumThreadComments.author}</p>
+        //       <TimeAgo date={forumThread.created_at} />
+        //     </div>
+        //     <div
+        //       className="card-body  text-right  btn-toolbar "
+        //       style={{ width: "18rem" }}
+        //     >
+        //       {AccessControlComments(
+        //         forumThreadComments.user_id,
+        //         forumThreadComments.id
+        //       )}
+        //     </div>
+        //   </div>
+        // </div>
       )
     );
     return allForumThreadComments;
@@ -259,7 +324,7 @@ const ForumThread = (): JSX.Element => {
   };
 
   const onChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     setFunction: Function
   ): void => {
     setFunction(event.target.value);
@@ -296,63 +361,131 @@ const ForumThread = (): JSX.Element => {
   };
 
   return (
-    <div className="">
-      <div className="hero position-relative d-flex flex-column align-items-center justify-content-center">
-        <div className="overlay bg-dark position-absolute" />
-        <h1 className="display-4 position-relative text-white">
-          {forumThread.title}
-        </h1>
-        <h4 className=" position-relative text-white">
-          {forumThread.category}
-        </h4>
-        <h4 className=" position-relative text-white">{forumThread.author}</h4>
-        <div
-          className=" position-relative text-white"
-          dangerouslySetInnerHTML={{
-            __html: `${forumThreadBody}`,
-          }}
-        />
-      </div>
-      <div className="container py-5">
-        <div className="row">
-          <div className="col-sm-12 col-lg-7"></div>
-          <div className="row">
-            <div className=" col-md-12 col-lg-12  mb-4">
-              <form onSubmit={onSubmit}>
-                <div className="form-group position-relative ">
+    //  <div className="">
+    //   <div className="hero position-relative d-flex flex-column align-items-center justify-content-center">
+    //     <div className="overlay bg-dark position-absolute" />
+    //     <h1 className="display-4 position-relative text-white">
+    //       {forumThread.title}
+    //     </h1>
+    //     <h4 className=" position-relative text-white">
+    //       {forumThread.category}
+    //     </h4>
+    //     <h4 className=" position-relative text-white">{forumThread.author}</h4>
+    //     <div
+    //       className=" position-relative text-white"
+    //       dangerouslySetInnerHTML={{
+    //         __html: `${forumThreadBody}`,
+    //       }}
+    //     />
+    //   </div>
+    //   <div className="container py-5">
+    //     <div className="row">
+    //       <div className="col-sm-12 col-lg-7"></div>
+    //       <div className="row">
+    //         <div className=" col-md-12 col-lg-12  mb-4">
+    //           <form onSubmit={onSubmit}>
+    //             <div className="form-group position-relative ">
+    //               <TextField
+    //                 value={body}
+    //                 style={{ textAlign: "left" }}
+    //                 placeholder="Comments?"
+    //                 multiline
+    //                 rows={5}
+    //                 className="card form-control"
+    //                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+    //                   onChange(event, setBody)
+    //                 }
+    //               />
+    //               <button
+    //                 type="submit"
+    //                 className="btn btn-primary btn-dark position-absolute bottom-0 end-0"
+    //               >
+    //                 Comment
+    //               </button>
+    //             </div>
+    //           </form>
+    //         </div>
+    //       </div>
+    //       <div className="row">
+    //         {ForumThreadCommentsDeterminer(forumThreadComments)}
+    //       </div>
+    //       <div className="col-sm-12 col-lg-2">
+    //         {AccessControlThread(forumThread.user_id)}
+    //       </div>
+    //     </div>
+    //     <Link to="/forumThreads" className="btn btn-dark ">
+    //       Back to threads
+    //     </Link>
+    //   </div>
+    // </div>
+
+    <Box
+      sx={{
+        minHeight: "100vh", // Ensure the Box takes the full height of the viewport
+        display: "flex",
+        flexDirection: "column",
+
+        bgcolor: "background.default",
+      }}
+    >
+      <StyledHero>
+        <Overlay />
+        <StyledContent sx={{ textAlign: "center" }}>
+          <Typography variant="h2" component="h1">
+            {forumThread.title}
+          </Typography>
+          <Typography variant="h4">{forumThread.category}</Typography>
+          <Typography variant="h4">{forumThread.author}</Typography>
+          <Typography dangerouslySetInnerHTML={{ __html: forumThreadBody }} />
+        </StyledContent>
+      </StyledHero>
+
+      <Container sx={{ py: 5 }}>
+        <Grid container spacing={3} justifyContent="center" alignItems="center">
+          <Grid item xs={12} lg={7}>
+            <Grid container>
+              <Grid item xs={12} mb={4}>
+                <StyledForm onSubmit={onSubmit}>
                   <TextField
                     value={body}
-                    style={{ textAlign: "left" }}
                     placeholder="Comments?"
                     multiline
                     rows={5}
-                    className="card form-control"
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      onChange(event, setBody)
-                    }
+                    fullWidth
+                    variant="outlined"
+                    onChange={(event) => onChange(event, setBody)}
                   />
-                  <button
+                  <StyledButton
                     type="submit"
-                    className="btn btn-primary btn-dark position-absolute bottom-0 end-0"
+                    variant="contained"
+                    color="primary"
                   >
                     Comment
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div className="row">
-            {ForumThreadCommentsDeterminer(forumThreadComments)}
-          </div>
-          <div className="col-sm-12 col-lg-2">
+                  </StyledButton>
+                </StyledForm>
+              </Grid>
+            </Grid>
+            <Grid>{ForumThreadCommentsDeterminer(forumThreadComments)}</Grid>
+          </Grid>
+          <Grid item xs={12}>
             {AccessControlThread(forumThread.user_id)}
-          </div>
-        </div>
-        <Link to="/forumThreads" className="btn btn-dark ">
+          </Grid>
+        </Grid>
+        {/* <Link
+          href="/forumThreads"
+          component={Button}
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2 }}
+        >
           Back to threads
-        </Link>
-      </div>
-    </div>
+        </Link> */}
+
+        <Button component={Link} to="/forumThreads" variant="outlined">
+          Back to posts
+        </Button>
+      </Container>
+    </Box>
   );
 };
 

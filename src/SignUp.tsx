@@ -164,7 +164,7 @@ const SignUp = () => {
                 to="/forumThreads"
                 fullWidth
                 variant="contained"
-                color="secondary"
+               
               >
                 Back to posts
               </Button>

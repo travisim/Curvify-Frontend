@@ -24,8 +24,8 @@ interface ForumThread {
 
 const ForumThreads = (): JSX.Element => {
   const navigate = useNavigate();
-  const theme = useTheme();
-  const textColor = theme.palette.mode === "dark" ? "white" : "black";
+  
+
   const [forumThreads, setForumThreads] = useState<JSX.Element[]>([]);
   const [currentFilter, setCurrentFilter] = useState<string>("All");
 

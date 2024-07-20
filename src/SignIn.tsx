@@ -21,8 +21,7 @@ interface User {
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const theme = useTheme();
-  const textColor = theme.palette.mode === "dark" ? "white" : "black";
+
   const [username, setUsername] = useState<string>("");
   const { user, setUser } = useContext(UserContext);
   const [password, setPassword] = useState<string>("");
@@ -78,10 +77,7 @@ const SignIn = () => {
         bgcolor: "background.default",
       }}
     >
-      <Container
-        maxWidth="sm"
-        sx={{ mt: 0}}
-      >
+      <Container maxWidth="sm" sx={{ mt: 0 }}>
         <Typography variant="h2" component="h1" color="text.primary">
           Sign In
         </Typography>
@@ -127,8 +123,7 @@ const SignIn = () => {
                 component={Link}
                 to="/forumThreads"
                 fullWidth
-                variant="contained"
-                color="secondary"
+                variant="outlined"
               >
                 Back to posts
               </Button>
