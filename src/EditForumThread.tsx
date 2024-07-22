@@ -1,7 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 interface ForumThread {
   title: string;
   category: string;
@@ -9,8 +18,6 @@ interface ForumThread {
 }
 
 const EditForumThread: React.FC = () => {
-  const theme = useTheme();
-  const textColor = theme.palette.mode === "dark" ? "white" : "black";
   const params = useParams();
   const navigate = useNavigate();
   const [forumThread, setForumThread] = useState<ForumThread>({
@@ -90,66 +97,148 @@ const EditForumThread: React.FC = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-sm-12 col-lg-6 offset-lg-3">
-          <h1 className="font-weight-normal mb-5">Edit Thread</h1>
-          <form onSubmit={onSubmit}>
-            <div className="form-group">
-              <label htmlFor="title">Thread Name</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                className="form-control"
-                required
-                defaultValue={forumThread.title}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="category">
-                Category name
-                <select
-                  name="category"
-                  id="category"
-                  className="form-control"
-                  required
-                  value={forumThread.category}
-                  onChange={handleChange}
-                  // defaultValue="Barter"
-                >
-                  <option value="Barter">Barter</option>
-                  <option value="Buy with AvoCurve Coin">
-                    Buy with AvoCurve Coin
-                  </option>
-                  <option value="Off-Advice">Off-Advice</option>
-                  <option value="Other">Other</option>
-                </select>
-              </label>
-            </div>
-            <div className="form-group">
-              <label htmlFor="body">Body</label>
-              <textarea
-                className="form-control"
-                id="body"
-                name="body"
-                rows={5}
-                required
-                value={forumThread.body}
-                onChange={handleChange}
-              />
-            </div>
-            <button type="submit" className="btn btn-dark mt-3">
+    <Box
+      justifyContent="center"
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.default",
+      }}
+    >
+      <Box width={{ xs: "100%", lg: "50%" }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          gutterBottom
+          color="text.primary"
+        >
+          Edit Thread
+        </Typography>
+        <form onSubmit={onSubmit}>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Thread Name"
+              type="text"
+              name="title"
+              id="title"
+              required
+              defaultValue={forumThread.title}
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="category-label">Category name</InputLabel>
+            <Select
+              labelId="category-label"
+              name="category"
+              id="category"
+              required
+              value={forumThread.category}
+              onChange={handleChange}
+            >
+              <MenuItem value="Trade">Trade</MenuItem>
+              <MenuItem value="Buy with AvoCurve Coin">
+                Buy with AvoCurve Coin
+              </MenuItem>
+              <MenuItem value="Donations">Donations</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </Select>
+          </FormControl>
+          {/* ["Trade", "Buy with AvoCurve Coin", "Donations", "Other"] */}
+
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Body"
+              id="body"
+              name="body"
+              multiline
+              rows={5}
+              required
+              value={forumThread.body}
+              onChange={handleChange}
+            />
+          </FormControl>
+          <Box mt={3}>
+            <Button type="submit" variant="contained" color="primary">
               Edit Thread
-            </button>
-            <Link to="/forumThreads" className="btn btn-dark mt-3 ">
+            </Button>
+            <Button
+              component={Link}
+              to="/forumThreads"
+              variant="outlined"
+              color="primary"
+              sx={{ ml: 2 }}
+            >
               Back to threads
-            </Link>
-          </form>
-        </div>
-      </div>
-    </div>
+            </Button>
+          </Box>
+        </form>
+      </Box>
+    </Box>
+
+    // <div className="container mt-5">
+    //   <div className="row">
+    //     <div className="col-sm-12 col-lg-6 offset-lg-3">
+    //       <h1 className="font-weight-normal mb-5">Edit Thread</h1>
+    //       <form onSubmit={onSubmit}>
+    //         <div className="form-group">
+    //           <label htmlFor="title">Thread Name</label>
+    //           <input
+    //             type="text"
+    //             name="title"
+    //             id="title"
+    //             className="form-control"
+    //             required
+    //             defaultValue={forumThread.title}
+    //             onChange={handleChange}
+    //           />
+    //         </div>
+    //         <div className="form-group">
+    //           <label htmlFor="category">
+    //             Category name
+    //             <select
+    //               name="category"
+    //               id="category"
+    //               className="form-control"
+    //               required
+    //               value={forumThread.category}
+    //               onChange={handleChange}
+    //               // defaultValue="Barter"
+    //             >
+    //               <option value="Barter">Trade</option>
+    //               <option value="Buy with AvoCurve Coin">
+    //                 Buy with AvoCurve Coin
+    //               </option>
+    //               <option value="Giveaway">Giveaway</option>
+    //               <option value="Other">Other</option>
+    //             </select>
+    //           </label>
+    //         </div>
+    //         <div className="form-group">
+    //           <label htmlFor="body">Body</label>
+    //           <textarea
+    //             className="form-control"
+    //             id="body"
+    //             name="body"
+    //             rows={5}
+    //             required
+    //             value={forumThread.body}
+    //             onChange={handleChange}
+    //           />
+    //         </div>
+    //         <button type="submit" className="btn btn-dark mt-3">
+    //           Edit Thread
+    //         </button>
+    //         <Link to="/forumThreads" className="btn btn-dark mt-3 ">
+    //           Back to threads
+    //         </Link>
+    //       </form>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

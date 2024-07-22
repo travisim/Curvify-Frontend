@@ -26,50 +26,76 @@ const ForumThreads = (): JSX.Element => {
   const navigate = useNavigate();
   
 
-  const [forumThreads, setForumThreads] = useState<JSX.Element[]>([]);
-  const [currentFilter, setCurrentFilter] = useState<string>("All");
+ const [forumThreads, setForumThreads] = useState<JSX.Element[]>([]);
+ const [currentFilter, setCurrentFilter] = useState<string>("All");
+ // const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/index`;
-    function ForumThreadDeterminer(forumThread: ForumThread[]): any {
-      if (forumThread.length > 0) {
-        return generateForumThreadHTML(forumThread);
-      } else {
-        return NoForumThreadHTML;
-      }
-    }
+ useEffect(() => {
+   const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/index`;
+   function ForumThreadDeterminer(forumThread: ForumThread[]): any {
+     if (forumThread.length > 0) {
+       return generateForumThreadHTML(forumThread);
+     } else {
+       return NoForumThreadHTML;
+     }
+   }
 
-    const NoForumThreadHTML = (
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        height="50vh"
-      >
-        <Typography variant="h4">No Posts In This Category yet.</Typography>
-      </Box>
-    );
+   const NoForumThreadHTML = (
+     <Box
+       display="flex"
+       alignItems="center"
+       justifyContent="center"
+       height="50vh"
+     >
+       <Typography variant="h4">No Posts In This Category yet.</Typography>
+     </Box>
+   );
 
-    fetch(url)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        throw new Error("Network response was not ok.");
-      })
-      .then((res) => setForumThreads(ForumThreadDeterminer(res)))
-      .catch(() => setForumThreads([NoForumThreadHTML]));
-  }, []);
+   fetch(url)
+     .then((res) => {
+       if (res.ok) {
+         return res.json();
+       }
+       throw new Error("Network response was not ok.");
+     })
+     .then((res) => setForumThreads(ForumThreadDeterminer(res)))
+     .catch(
+       () => setForumThreads([NoForumThreadHTML]) /*navigate("/forumThreads")*/
+     ); // should be navigate("/error") but we don't have an error page
+ }, []);
 
-  function fetchForumThreadsByCategory(category: string): void {
-    // ... (same as before)
-  }
+ function fetchForumThreadsByCategory(category: string): void {
+   const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/showForumThreadsByCategory/${category}`;
+   function ForumThreadDeterminer(forumThread: ForumThread[]): any {
+     if (forumThread.length > 0) {
+       return generateForumThreadHTML(forumThread);
+     } else {
+       return NoForumThreadHTMLCategory;
+     }
+   }
 
-   function FilterbyCategory(event: React.ChangeEvent< any>): void {
-    const value = event.target.value as string;
-    setCurrentFilter(value);
-    fetchForumThreadsByCategory(value);
-  }
+   const NoForumThreadHTMLCategory = (
+     <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
+       <h4>No Posts In This Category yet.</h4>
+     </div>
+   );
+   fetch(url)
+     .then((res) => {
+       if (res.ok) {
+         return res.json();
+       }
+       throw new Error("Network response was not ok.");
+     })
+     .then((res) => {
+       setForumThreads(ForumThreadDeterminer(res));
+     })
+     .catch();
+ }
+
+ function FilterbyCategory(event: React.ChangeEvent<any>): void {
+   setCurrentFilter(event.target.value);
+   fetchForumThreadsByCategory(event.target.value);
+ }
 
 
   function generateForumThreadHTML(forumThreads: ForumThread[]): JSX.Element[] {
@@ -103,18 +129,18 @@ const ForumThreads = (): JSX.Element => {
     return allForumThread;
   }
 
-  const noForumThread = (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      height="50vh"
-    >
-      <Typography variant="h4">
-        No post yet. Why not <Link to="/newForumThread">Create One</Link>
-      </Typography>
-    </Box>
-  );
+  // const noForumThreadHTML = (
+  //   <Box
+  //     display="flex"
+  //     alignItems="center"
+  //     justifyContent="center"
+  //     height="50vh"
+  //   >
+  //     <Typography variant="h4">
+  //       No post yet. Why not <Link to="/newForumThread">Create One</Link>
+  //     </Typography>
+  //   </Box>
+  // );
 
   return (
     <>
@@ -135,64 +161,62 @@ const ForumThreads = (): JSX.Element => {
             color="text.secondary"
             paragraph
           >
-            Bartering for textbooks/notes would be a way to increase liquidity
+            Trade textbooks/notes
           </Typography>
         </Container>
       </Box>
-      
-           <Box
-      sx={{
-        
-        bgcolor: "background.default",
-      }}
-    >
-      <Container sx={{ py: 8 }} maxWidth="md">
-        <Box display="flex" justifyContent="flex-end" mb={3}>
+
+      <Box
+        sx={{
+          bgcolor: "background.default",
+        }}
+      >
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Box display="flex" justifyContent="flex-end" mb={3}>
+            <Button
+              component={Link}
+              to="/newForumThread"
+              variant="contained"
+              color="primary"
+            >
+              Create New Post
+            </Button>
+          </Box>
+          <Box display="flex" justifyContent="flex-end" mb={3}>
+            <FormControl sx={{ minWidth: 120 }}>
+              <InputLabel id="category-label">Filter by Category</InputLabel>
+              <Select
+                labelId="category-label"
+                id="category"
+                value={currentFilter}
+                label="Filter by Category"
+                onChange={FilterbyCategory}
+              >
+                <MenuItem value="All">All</MenuItem>
+                <MenuItem value="Trade">Trade</MenuItem>
+                <MenuItem value="Buy with AvoCurve Coin">
+                  Buy with AvoCurve Coin
+                </MenuItem>
+                <MenuItem value="Donations">Donations</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          {/* ["Trade", "Buy with AvoCurve Coin", "Donations", "Other"] */}
+          <Grid container spacing={4}>
+            {forumThreads}
+          </Grid>
           <Button
             component={Link}
-            to="/newForumThread"
+            to="/"
             variant="contained"
             color="primary"
+            sx={{ mt: 4 }}
           >
-            Create New Post
+            About
           </Button>
-        </Box>
-        <Box display="flex" justifyContent="flex-end" mb={3}>
-          <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel id="category-label">Filter by Category</InputLabel>
-            <Select
-              labelId="category-label"
-              id="category"
-              value={currentFilter}
-              label="Filter by Category"
-              onChange={FilterbyCategory}
-            >
-              <MenuItem value="All">All</MenuItem>
-              <MenuItem value="Barter">Barter</MenuItem>
-              <MenuItem value="Buy with AvoCurve Coin">
-                Buy with AvoCurve Coin
-              </MenuItem>
-              <MenuItem value="Off-Advice">Off-Advice</MenuItem>
-              <MenuItem value="Other">Other</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Grid container spacing={4}>
-          {forumThreads}
-        </Grid>
-        <Button
-          component={Link}
-          to="/"
-          variant="contained"
-          color="primary"
-          sx={{ mt: 4 }}
-        >
-          About
-          </Button>
-          
-      </Container>
-       </Box>
-      
+        </Container>
+      </Box>
     </>
   );
 };

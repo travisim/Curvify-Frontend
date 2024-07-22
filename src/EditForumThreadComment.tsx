@@ -14,8 +14,6 @@ interface ForumThreadCommentStorage {
 const EditForumThreadComment = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const theme = useTheme();
-  const textColor = theme.palette.mode === "dark" ? "white" : "black";
   const [forumThreadComment, setForumThreadComment] =
     useState<ForumThreadCommentStorage>();
 
@@ -59,6 +57,10 @@ const EditForumThreadComment = () => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread_comments/update/${params.id}`;
+      if (
+        forumThreadComment.body.length === 0
+      )
+        return;
     if (forumThreadComment.body.length === 0) return;
     const forumThreadCommentContent = {
       body: stripHtmlEntities(forumThreadComment.body),
@@ -119,3 +121,6 @@ const EditForumThreadComment = () => {
 };
 
 export default EditForumThreadComment;
+
+
+

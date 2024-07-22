@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -11,40 +11,96 @@ import {
   Grid,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
+import { UserContext } from "./App";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password_confirmation, setPasswordConfirmation] = useState("");
-  const [isUserCreated, setIsUserCreated] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
-
-
-
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [password_confirmation, setPasswordConfirmation] = useState<string>("");
+  const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false); // Use for Snackbar open state
+  const [errorMessage, setErrorMessage] = useState<string>(""); // Use for error message
+  
+    const { user, setUser } = useContext(UserContext);
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase()) && email.endsWith("@u.nus.edu");
+  };
   const onChange = (
-    event: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     setFunction: React.Dispatch<React.SetStateAction<string>>
   ) => {
     setFunction(event.target.value);
   };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (
+    event: React.FormEvent<HTMLFormElement | HTMLTextAreaElement>
+  ) => {
     event.preventDefault();
-    // ... (rest of the onSubmit function remains the same)
+    if (password !== password_confirmation) {
+      setErrorMessage("Passwords do not match."); // Set error message
+      setSnackbarOpen(true); // Open the Snackbar
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setErrorMessage("Invalid email format. Email must end with @u.nus.edu");
+      setSnackbarOpen(true);
+      return;
+    }
+    const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/users/create`;
+    if (username.length === 0) return;
+    const signInContent = {
+      username,
+      name,
+      email,
+      password,
+      password_confirmation,
+    };
+    // const token = document
+    //   .querySelector('meta[name="csrf-token"]')
+    //   ?.getAttribute("content");
+    fetch(url, {
+      method: "POST",
+      headers: {
+        // "X-CSRF-Token": token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signInContent),
+      // credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data, "data");
+        if (!data.errors) {
+          setIsUserCreated(true);
+          localStorage.setItem("token", data.token);
+          setUser(data.user);
+          setTimeout(() => {
+            navigate(`/forumThreads`);
+          }, 2000);
+        } else {
+          setErrorMessage(data.errors[0]);
+          setSnackbarOpen(true);
+        }
+      })
+      .catch((error) => {
+        setErrorMessage(error.message || "An error occurred during sign up.");
+        setSnackbarOpen(true);
+      });
   };
 
   function displaySucessfullyCreatedAccountAlert() {
-    if (isUserCreated) {
+    if (isUserCreated === false) {
+      return;
+    } else {
       return (
-        <Alert severity="success" sx={{ width: "100%", mb: 2 }}>
-          Successfully created account! Redirecting to posts, please sign in...
-        </Alert>
+        <div className="alert alert-success" role="alert">
+          Sucessfully created account! Redirecting to posts, you are logged in.
+        </div>
       );
     }
   }
@@ -56,7 +112,7 @@ const SignUp = () => {
     if (reason === "clickaway") {
       return;
     }
-    setSnackbarOpen(false);
+    setSnackbarOpen(false); // Close the Snackbar
   };
 
   return (
@@ -94,7 +150,7 @@ const SignUp = () => {
 
         {displaySucessfullyCreatedAccountAlert()}
 
-        <Box component="form" onSubmit={onSubmit} noValidate>
+        <Box component="form" onSubmit={onSubmit}>
           <TextField
             margin="normal"
             required
@@ -147,24 +203,17 @@ const SignUp = () => {
             autoComplete="new-password"
             onChange={(event) => onChange(event, setPasswordConfirmation)}
           />
+          <Button type="submit" fullWidth variant="contained" color="primary">
+            Sign Up
+          </Button>
           <Grid container spacing={2} sx={{ mt: 3 }}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
-                Sign Up
-              </Button>
-            </Grid>
+            <Grid item xs={12} sm={6}></Grid>
             <Grid item xs={12} sm={6}>
               <Button
                 component={Link}
                 to="/forumThreads"
                 fullWidth
-                variant="contained"
-               
+                variant="outlined"
               >
                 Back to posts
               </Button>

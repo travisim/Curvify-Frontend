@@ -119,15 +119,15 @@ const NewForumThread = () => {
               onChange={(e) => setCategory(e.target.value)}
               required
             >
-              <MenuItem value="Barter">Barter</MenuItem>
+              <MenuItem value="Trade">Trade</MenuItem>
               <MenuItem value="Buy with AvoCurve Coin">
                 Buy with AvoCurve Coin
               </MenuItem>
-              <MenuItem value="Off-Advice">Off-Advice</MenuItem>
+              <MenuItem value="Donations">Donations</MenuItem>
               <MenuItem value="Other">Other</MenuItem>
             </Select>
           </FormControl>
-
+          {/* ["Trade", "Buy with AvoCurve Coin", "Donations", "Other"] */}
           <FormControl fullWidth margin="normal">
             <TextField
               label="Body"

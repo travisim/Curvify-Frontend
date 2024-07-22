@@ -173,7 +173,25 @@ const ForumThread = (): JSX.Element => {
     if (user == null) return null;
     if (user.id === forumThreadCommentUserID) {
       return (
-        <div>
+        // <Box display="flex">
+        //   <Button
+        //     variant="contained"
+        //     color="primary"
+        //     component={Link}
+        //     to={`/editForumThreadComment/${forumThreadCommentID}`}
+        //   >
+        //     Edit
+        //   </Button>
+        //   <Button
+        //     variant="contained"
+        //     color="error"
+        //     onClick={(event) => deleteForumThreadComments(forumThreadCommentID)}
+        //   >
+        //     Delete
+        //   </Button>
+        // </Box>
+
+         <div>
           <div className="btn-group mr-2" role="group">
             <Link
               to={`/editForumThreadComment/${forumThreadCommentID}`}
@@ -204,21 +222,20 @@ const ForumThread = (): JSX.Element => {
     if (user == null) return null;
     if (user.id === forumThreadID) {
       return (
-        <div>
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={deleteForumThread}
-          >
-            Delete thread
-          </button>
-          <Link
+        <Box>
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
             to={`/editForumThread/${forumThread.id}`}
-            className="btn btn-dark"
+            sx={{ ml: 2 }}
           >
             Edit
-          </Link>
-        </div>
+          </Button>
+          <Button variant="contained" color="error" onClick={deleteForumThread}>
+            Delete thread
+          </Button>
+        </Box>
       );
     }
     return null;
@@ -229,7 +246,7 @@ const ForumThread = (): JSX.Element => {
   ): JSX.Element[] => {
     const allForumThreadComments = forumThreadComments.map(
       (forumThreadComments, index) => (
-        <Card key={index} variant="outlined" sx={{ mb: 3 }}>
+        <Card key={index} variant="outlined" sx={{ mb: 3, width: "100%" }}>
           <CardContent>
             <Typography
               variant="h5"
@@ -285,12 +302,28 @@ const ForumThread = (): JSX.Element => {
   };
 
   const NoForumThreadCommentsHTML = (
-    <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
-      <h4>
+    <Box
+      sx={{
+        width: "100vw",
+        height: "50vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Typography variant="h4" color="text.primary">
         No Comments yet, why not{" "}
-        <Link to="/newForumThreadComments">create one</Link>
-      </h4>
-    </div>
+        <Link
+     
+          to="/newforumThreadComments"
+         
+          color="primary"
+    
+        >
+          create one
+        </Link>
+      </Typography>
+    </Box>
   );
 
   const ForumThreadCommentsDeterminer = (
@@ -471,9 +504,9 @@ const ForumThread = (): JSX.Element => {
                 </StyledForm>
               </Grid>
             </Grid>
-            <Grid>{ForumThreadCommentsDeterminer(forumThreadComments)}</Grid>
+            <Grid container spacing={0} justifyContent="center" alignItems="center">{ForumThreadCommentsDeterminer(forumThreadComments)}</Grid>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={7}>
             {AccessControlThread(forumThread.user_id)}
           </Grid>
         </Grid>

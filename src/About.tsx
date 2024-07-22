@@ -29,7 +29,7 @@ const About = () => {
             (BSP1702) require students to buy a physical textbook for use in the
             finals and the use of a printed pdf copy of the textbook would be
             prohibited. Additionally, since university students are cash
-            strapped, bartering for textbooks/notes would be a way to increase
+            strapped, trading textbooks/notes would be a way to increase
             liquidity in this market place.
           </Typography>
           <Box sx={{ my: 4 }}>

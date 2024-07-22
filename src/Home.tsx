@@ -27,7 +27,7 @@ const Home = () => {
             Curvify
           </Typography>
           <Typography variant="h5" paragraph color= "text.secondary">
-            Make mutually beneficial exchanges in by bartering or using AvoCurve
+            Make mutually beneficial exchanges in by trading or using AvoCurve
             coins.
           </Typography>
           <Box sx={{ my: 4 }}>
