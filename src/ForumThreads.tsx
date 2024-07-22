@@ -115,48 +115,28 @@ const ForumThreads = (): JSX.Element => {
   );
 
   return (
-    <>
-      <section className="jumbotron jumbotron-fluid text-center">
-        <div className="container py-5">
-          <h1 className="display-4">Latest Posts</h1>
-          <p className="lead text-muted">Bartering or using AvoCurve coins</p>
-        </div>
-      </section>
-      <div className="py-5">
-        <main className="container">
-          <div className="text-end mb-3">
-            <Link to="/newForumThread" className="btn btn-dark">
-              Create New Post
-            </Link>
-          </div>
-          <div className=" text-end mb-3">
-            <label htmlFor="category">
-              Filter by Category
-              <select
-                name="category"
-                id="category"
-                className="form-control"
-                required
-                onChange={FilterbyCategory}
-                defaultValue="All"
-              >
-                <option value="All">All</option>
-                <option value="Barter">Barter</option>
-                <option value="Buy with AvoCurve Coin">
-                  Buy with AvoCurve Coin
-                </option>
-                <option value="Off-Advice">Off-Advice</option>
-                <option value="Other">Other</option>
-              </select>
-            </label>
-          </div>
-          <div className="row">{forumThreads}</div>
-          <Link to="/" className="btn btn-dark">
-            About
-          </Link>
-        </main>
-      </div>
-    </>
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>Latest Posts</Typography>
+      <Typography variant="subtitle1">Bartering or using AvoCurve coins</Typography>
+      <Button component={Link} to="/newForumThread" variant="contained" sx={{ my: 2 }}>
+        Create New Post
+      </Button>
+      <FormControl fullWidth>
+        <InputLabel>Filter by Category</InputLabel>
+        <Select
+          value={currentFilter}
+          onChange={FilterbyCategory}
+          label="Filter by Category"
+        >
+          <MenuItem value="All">All</MenuItem>
+          <MenuItem value="Barter">Barter</MenuItem>
+          <MenuItem value="Buy with AvoCurve Coin">Buy with AvoCurve Coin</MenuItem>
+          <MenuItem value="Off-Advice">Off-Advice</MenuItem>
+          <MenuItem value="Other">Other</MenuItem>
+        </Select>
+      </FormControl>
+      {forumThreads.length ? forumThreads : noForumThread}
+    </Container>
   );
 };
 
