@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { TextField, Button, Container, Typography, Box, Paper } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Box,
+  Paper,
+} from "@mui/material";
 import { UserContext } from "./App";
 import TimeAgo from "react-timeago";
 import { useTheme } from "@mui/material/styles";
-import { Card, CardContent, CardActions,Grid } from "@mui/material";
+import { Card, CardContent, CardActions, Grid } from "@mui/material";
 
 import { styled } from "@mui/system";
 
@@ -41,7 +48,6 @@ const StyledButton = styled(Button)({
   bottom: 8,
   right: 8,
 });
-
 
 interface ForumThreadStorage {
   title: string;
@@ -231,7 +237,7 @@ const ForumThread = (): JSX.Element => {
               sx={{ whiteSpace: "pre-line" }}
               dangerouslySetInnerHTML={{
                 __html: forumThreadComments.body.replace(
-       /&lt;br&gt; &lt;br&gt;/g,
+                  /&lt;br&gt; &lt;br&gt;/g,
                   "<br>"
                 ),
               }}
