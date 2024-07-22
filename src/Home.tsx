@@ -1,11 +1,9 @@
 import React from "react";
 import { Container, Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
+
 
 const Home = () => {
-  const theme = useTheme();
-  const textColor = theme.palette.mode === "dark" ? "white" : "black";
 
   return (
     <Box
@@ -24,11 +22,11 @@ const Home = () => {
             variant="h2"
             component="h1"
             gutterBottom
-            sx={{ color: textColor }}
+            color = "text.primary"
           >
             Curvify
           </Typography>
-          <Typography variant="h5" paragraph sx={{ color: textColor }}>
+          <Typography variant="h5" paragraph color= "text.secondary">
             Make mutually beneficial exchanges in by bartering or using AvoCurve
             coins.
           </Typography>
