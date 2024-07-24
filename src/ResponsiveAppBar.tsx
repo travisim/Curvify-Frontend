@@ -31,10 +31,13 @@ import {
 import { useContext, useMemo } from "react";
 import { ThemeContext } from "./theme/index";
 
+// Defining constants for navigation and settings options
 const pages = ["About"];
 const settings = ["Profile"]; //, "Account", "Dashboard", "Logout"];
 
+// Main component function
 function ResponsiveAppBar() {
+  // Hooks for navigation and theme context
   const navigate = useNavigate();
 
   const theme = useTheme();
@@ -44,7 +47,10 @@ function ResponsiveAppBar() {
     [theme]
   );
 
+  // Using UserContext to manage user state
   const { user, setUser } = React.useContext(UserContext);
+
+  // Function to display login status
   function displayLoginStatus() {
     if (user === null) {
       return <Typography textAlign="center"></Typography>;
@@ -55,6 +61,7 @@ function ResponsiveAppBar() {
     }
   }
 
+  // Function to handle logout
   function handleLogout() {
     setUser(null);
     fetch("/logout", {
@@ -68,6 +75,7 @@ function ResponsiveAppBar() {
     console.log("logged out");
   }
 
+  // Function to display sign-in or sign-out buttons based on user state
   function displaySignInOutbuttons() {
     if (user === null) {
       return (
@@ -91,6 +99,7 @@ function ResponsiveAppBar() {
   }
   //   console.log(displayLoginStatus());
 
+  // State hooks for managing menu anchor elements
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -98,6 +107,7 @@ function ResponsiveAppBar() {
     null
   );
 
+  // Handlers for opening and closing navigation and user menus
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };

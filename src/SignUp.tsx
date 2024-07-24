@@ -14,46 +14,46 @@ import { useTheme } from "@mui/material/styles";
 import { UserContext } from "./App";
 
 const SignUp = () => {
-  const navigate = useNavigate();
-  const [name, setName] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [password_confirmation, setPasswordConfirmation] = useState<string>("");
-  const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
-  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false); // Use for Snackbar open state
-  const [errorMessage, setErrorMessage] = useState<string>(""); // Use for error message
+  const navigate = useNavigate(); // Hook to navigate between routes
+  const [name, setName] = useState<string>(""); // State for storing name input
+  const [username, setUsername] = useState<string>(""); // State for storing username input
+  const [email, setEmail] = useState<string>(""); // State for storing email input
+  const [password, setPassword] = useState<string>(""); // State for storing password input
+  const [password_confirmation, setPasswordConfirmation] = useState<string>(""); // State for storing password confirmation input
+  const [isUserCreated, setIsUserCreated] = useState<boolean>(false); // State to track if user creation was successful
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false); // State to control Snackbar visibility
+  const [errorMessage, setErrorMessage] = useState<string>(""); // State to store error messages
   
-    const { user, setUser } = useContext(UserContext);
-  const validateEmail = (email) => {
+    const { user, setUser } = useContext(UserContext); // Using context to access and set user state
+  const validateEmail = (email) => { // Function to validate email format
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase()) && email.endsWith("@u.nus.edu");
   };
-  const onChange = (
+  const onChange = ( // Generic onChange handler for form inputs
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     setFunction: React.Dispatch<React.SetStateAction<string>>
   ) => {
     setFunction(event.target.value);
   };
 
-  const onSubmit = (
+  const onSubmit = ( // Handler for form submission
     event: React.FormEvent<HTMLFormElement | HTMLTextAreaElement>
   ) => {
     event.preventDefault();
-    if (password !== password_confirmation) {
+    if (password !== password_confirmation) { // Check if passwords match
       setErrorMessage("Passwords do not match."); // Set error message
       setSnackbarOpen(true); // Open the Snackbar
       return;
     }
 
-    if (!validateEmail(email)) {
+    if (!validateEmail(email)) { // Validate email format
       setErrorMessage("Invalid email format. Email must end with @u.nus.edu");
       setSnackbarOpen(true);
       return;
     }
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/users/create`;
     if (username.length === 0) return;
-    const signInContent = {
+    const signInContent = { // Object to send in the POST request
       username,
       name,
       email,
@@ -63,7 +63,7 @@ const SignUp = () => {
     // const token = document
     //   .querySelector('meta[name="csrf-token"]')
     //   ?.getAttribute("content");
-    fetch(url, {
+    fetch(url, { // Fetch API to send POST request to server
       method: "POST",
       headers: {
         // "X-CSRF-Token": token,
@@ -75,25 +75,25 @@ const SignUp = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data, "data");
-        if (!data.errors) {
+        if (!data.errors) {// Check if there are no errors in response
           setIsUserCreated(true);
-          localStorage.setItem("token", data.token);
-          setUser(data.user);
+          localStorage.setItem("token", data.token); // Store token in localStorage
+          setUser(data.user); // Update user context
           setTimeout(() => {
-            navigate(`/forumThreads`);
+            navigate(`/forumThreads`); // Navigate to forum threads after 2 seconds
           }, 2000);
         } else {
-          setErrorMessage(data.errors[0]);
+          setErrorMessage(data.errors[0]); // Set error message from response
           setSnackbarOpen(true);
         }
       })
-      .catch((error) => {
+      .catch((error) => { // Catch and handle any errors during fetch
         setErrorMessage(error.message || "An error occurred during sign up.");
         setSnackbarOpen(true);
       });
   };
 
-  function displaySucessfullyCreatedAccountAlert() {
+  function displaySucessfullyCreatedAccountAlert() { // Function to display success alert
     if (isUserCreated === false) {
       return;
     } else {
@@ -105,7 +105,7 @@ const SignUp = () => {
     }
   }
 
-  const handleCloseSnackbar = (
+  const handleCloseSnackbar = ( // Function to handle Snackbar close
     event?: React.SyntheticEvent,
     reason?: string
   ) => {

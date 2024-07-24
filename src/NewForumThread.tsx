@@ -15,15 +15,17 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
+// Component for creating a new forum thread
 const NewForumThread = () => {
-  const navigate = useNavigate();
-  const [title, setTitle] = useState<string>("");
-  const [category, setCategory] = useState<string>("Barter");
-  const [body, setBody] = useState<string>("");
-  const { user, setUser } = useContext(UserContext);
-  const theme = useTheme();
-  const textColor = theme.palette.mode === "dark" ? "white" : "black";
+  const navigate = useNavigate(); // Hook to programmatically navigate
+  const [title, setTitle] = useState<string>(""); // State for the thread title
+  const [category, setCategory] = useState<string>("Barter"); // State for the thread category, defaulting to "Barter"
+  const [body, setBody] = useState<string>(""); // State for the thread body
+  const { user, setUser } = useContext(UserContext); // Using context to access the current user
+  const theme = useTheme(); // Accessing the current theme
+  const textColor = theme.palette.mode === "dark" ? "white" : "black"; // Determining text color based on theme mode
 
+  // Function to strip HTML entities from a string
   const stripHtmlEntities = (str: string) => {
     return String(str)
       .replace(/\n/g, "<br> <br>")
@@ -31,6 +33,7 @@ const NewForumThread = () => {
       .replace(/>/g, "&gt;");
   };
 
+  // Generic onChange handler for form inputs
   const onChange = (
     event: ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -40,17 +43,21 @@ const NewForumThread = () => {
     setFunction(event.target.value);
   };
 
+  // Handler for form submission
   const onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
+    event.preventDefault(); // Preventing default form submission behavior
     if (!user) {
       alert("You must be logged in to create a new thread");
       return;
     }
 
+    // Constructing the URL for the API call
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/create`;
+    // Early return if any field is empty
     if ((title.length === 0 || body.length === 0, category.length === 0))
       return;
 
+    // Constructing the payload for the API call
     const forumThreadContent = {
       title,
       category,
@@ -67,6 +74,7 @@ const NewForumThread = () => {
     //   return;
     // }
 
+    // Making the API call to create a new forum thread
     fetch(url, {
       method: "POST",
       headers: {
@@ -82,10 +90,11 @@ const NewForumThread = () => {
         }
         throw new Error("Network response was not ok.");
       })
-      .then((response) => navigate(`/forumThread/${response.id}`))
-      .catch((error) => console.log(error.message));
+      .then((response) => navigate(`/forumThread/${response.id}`))  // Navigating to the newly created thread
+      .catch((error) => console.log(error.message)); // Logging any errors
   };
 
+  // Rendering the form for creating a new forum thread
   return (
     <Box
       sx={{

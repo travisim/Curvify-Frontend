@@ -2,10 +2,11 @@ import React from "react";
 import { Container, Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-
+// Defines the Home component
 const Home = () => {
-
+  // Returns the JSX for the Home component
   return (
+    // Box component used as the outer container with full viewport width and height
     <Box
       sx={{
         width: "100vw",

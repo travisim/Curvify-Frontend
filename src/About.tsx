@@ -19,7 +19,7 @@ const About = () => {
           <Typography
             variant="h2"
             component="h1"
-            gutterBottom
+            gutterBottom // Adds bottom margin
             color="text.primary"
           >
             About
@@ -34,8 +34,8 @@ const About = () => {
           </Typography>
           <Box sx={{ my: 4 }}>
             <Button
-              component={Link}
-              to="/forumThreads"
+              component={Link} // Makes the button act as a React Router Link
+              to="/forumThreads" // The path to navigate to when the button is clicked
               variant="contained"
               color="primary"
               size="large"
