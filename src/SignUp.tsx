@@ -203,22 +203,24 @@ const SignUp = () => {
             autoComplete="new-password"
             onChange={(event) => onChange(event, setPasswordConfirmation)}
           />
-          <Button type="submit" fullWidth variant="contained" color="primary">
-            Sign Up
-          </Button>
-          <Grid container spacing={2} sx={{ mt: 3 }}>
-            <Grid item xs={12} sm={6}></Grid>
-            <Grid item xs={12} sm={6}>
-              <Button
-                component={Link}
-                to="/forumThreads"
-                fullWidth
-                variant="outlined"
-              >
-                Back to posts
+
+       
+
+          <Box >
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Link to="/forumThreads" style={{ textDecoration: "none" }}>
+              <Button variant="outlined" sx={{ mt: 2, ml: 2 }}>
+                Back to Posts
               </Button>
-            </Grid>
-          </Grid>
+            </Link>
+          </Box>
         </Box>
       </Container>
     </Box>

@@ -21,6 +21,7 @@ interface User {
   email: string;
   created_at: string;
   updated_at: string;
+  avatar: string;
 }
 export const UserContext = createContext<null | { user: User, setUser: React.Dispatch<React.SetStateAction<User>> }>(null);
 

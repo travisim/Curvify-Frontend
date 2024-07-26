@@ -17,6 +17,7 @@ interface User {
   username: string;
   created_at: string;
   updated_at: string;
+  avatar: string;
 }
 
 const SignIn = () => {
@@ -107,28 +108,23 @@ const SignIn = () => {
             autoComplete="current-password"
             onChange={(event) => onChange(event, setPassword)}
           />
-          <Grid container spacing={2} sx={{ mt: 3 }}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
-                Sign In
+
+          <Box >
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2 }}
+            >
+              Sign In
+            </Button>
+            <Link to="/forumThreads" style={{ textDecoration: "none" }}>
+              <Button variant="outlined" sx={{ mt: 2, ml: 2 }}>
+                Back to Posts
               </Button>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Button
-                component={Link}
-                to="/forumThreads"
-                fullWidth
-                variant="outlined"
-              >
-                Back to posts
-              </Button>
-            </Grid>
-          </Grid>
+            </Link>
+          </Box>
+          
         </Box>
         <Snackbar
           open={snackbarOpen}

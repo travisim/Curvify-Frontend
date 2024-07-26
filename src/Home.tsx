@@ -2,9 +2,7 @@ import React from "react";
 import { Container, Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-
 const Home = () => {
-
   return (
     <Box
       sx={{
@@ -22,24 +20,29 @@ const Home = () => {
             variant="h2"
             component="h1"
             gutterBottom
-            color = "text.primary"
+            color="text.primary"
           >
             Curvify
           </Typography>
-          <Typography variant="h5" paragraph color= "text.secondary">
+          <Typography variant="h5" paragraph color="text.secondary">
             Make mutually beneficial exchanges in by trading or using AvoCurve
             coins.
           </Typography>
           <Box sx={{ my: 4 }}>
             <Button
               component={Link}
-              to="/forumThreads"
+              to="/signUp"
               variant="contained"
               color="primary"
-              size="large"
+              sx={{ mt: 2 }}
             >
-              View Posts
+              Sign Up
             </Button>
+            <Link to="/forumThreads" style={{ textDecoration: "none" }}>
+              <Button variant="outlined" sx={{ mt: 2, ml: 2 }}>
+                View Posts
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Container>
