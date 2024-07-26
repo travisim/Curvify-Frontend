@@ -125,7 +125,7 @@ const EditForumThread: React.FC = () => {
               name="title"
               id="title"
               required
-              defaultValue={forumThread.title}
+              value={forumThread.title?forumThread.title: ""}
               onChange={handleChange}
             />
           </FormControl>

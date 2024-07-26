@@ -35,7 +35,7 @@ const Home = () => {
               component={Link}
               to="/forumThreads"
               variant="contained"
-              color="secondary"
+              color="primary"
               size="large"
             >
               View Posts
