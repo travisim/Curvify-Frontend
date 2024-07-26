@@ -17,12 +17,14 @@ import './App.css'
 
 // Defining the User interface for TypeScript type checking
 interface User {
+  name: string;
   id: number;
   username: string;
   email: string;
   created_at: string;
   updated_at: string;
   avatar: string;
+  password: string;
 }
 // Creating a context for user state to be accessible throughout the component tree
 export const UserContext = createContext<null | { user: User, setUser: React.Dispatch<React.SetStateAction<User>> }>(null);

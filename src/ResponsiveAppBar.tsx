@@ -44,10 +44,8 @@ function ResponsiveAppBar() {
   const theme = useTheme();
   const { switchColorMode } = useContext(ThemeContext);
 
-
   // Using UserContext to manage user state
   const { user, setUser } = React.useContext(UserContext);
- 
 
   // Function to handle logout
   function handleLogout() {
@@ -63,29 +61,7 @@ function ResponsiveAppBar() {
     console.log("logged out");
   }
 
-  // Function to display sign-in or sign-out buttons based on user state
-  function displaySignInOutbuttons() {
-    if (user === null) {
-      return (
-        <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <MenuItem component={Link} to="/signIn">
-            <Typography textAlign="center">Sign In</Typography>
-          </MenuItem>
 
-          <MenuItem component={Link} to="/signUp">
-            <Typography textAlign="center">Sign up</Typography>
-          </MenuItem>
-        </Box>
-      );
-    } else {
-      return (
-        <MenuItem onClick={handleLogout}>
-          <Typography textAlign="center">Logout</Typography>
-        </MenuItem>
-      );
-    }
-  }
-  //   console.log(displayLoginStatus());
 
   // State hooks for managing menu anchor elements
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -110,18 +86,9 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-    const handleMenuItemClick = (setting: string) => {
-    if (setting === 'Logout') {
-         setUser(null);
-    fetch("/logout", {
-      method: "POST",
-      credentials: "include", // Important to include credentials to ensure cookies are sent
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data.message))
-      .catch((error) => console.error("Error:", error));
-    navigate(`/forumThreads`);
-    console.log("logged out");
+  const handleMenuItemClick = (setting: string) => {
+    if (setting === "Logout") {
+      handleLogout();
     }
     handleCloseUserMenu();
   };
@@ -132,7 +99,6 @@ function ResponsiveAppBar() {
       sx={{
         backgroundColor: "background.default",
         color: "text.primary",
-
       }}
     >
       <Container maxWidth="xl">
@@ -264,7 +230,13 @@ function ResponsiveAppBar() {
                 )}
               </IconButton>
             </Tooltip>
-            <Tooltip title="Settings">
+          
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            {user ? (
+              <>
+                  <Tooltip title="Settings">
               <IconButton
                 sx={{ mr: 1 }}
                 color="inherit"
@@ -274,11 +246,6 @@ function ResponsiveAppBar() {
                 <SettingsIcon />
               </IconButton>
             </Tooltip>
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            {user ? (
-              <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt={user.username} src={user.avatar || ""}>

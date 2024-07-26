@@ -173,23 +173,7 @@ const ForumThread = (): JSX.Element => {
     if (user == null) return null;
     if (user.id === forumThreadCommentUserID) {
       return (
-        // <Box display="flex">
-        //   <Button
-        //     variant="contained"
-        //     color="primary"
-        //     component={Link}
-        //     to={`/editForumThreadComment/${forumThreadCommentID}`}
-        //   >
-        //     Edit
-        //   </Button>
-        //   <Button
-        //     variant="contained"
-        //     color="error"
-        //     onClick={(event) => deleteForumThreadComments(forumThreadCommentID)}
-        //   >
-        //     Delete
-        //   </Button>
-        // </Box>
+       
 
          <div>
           <div className="btn-group mr-2" role="group">
@@ -272,30 +256,6 @@ const ForumThread = (): JSX.Element => {
             )}
           </CardContent>
         </Card>
-
-        //   <div key={index} className="">
-        //   <div className="card mb-4">
-        //     <div className="card-body  col-lg-10">
-        //       <h4
-        //         className="card-text"
-        //         dangerouslySetInnerHTML={{
-        //           __html: `${addHtmlEntities(forumThreadComments.body)}`,
-        //         }}
-        //       ></h4>
-        //       <p>{forumThreadComments.author}</p>
-        //       <TimeAgo date={forumThread.created_at} />
-        //     </div>
-        //     <div
-        //       className="card-body  text-right  btn-toolbar "
-        //       style={{ width: "18rem" }}
-        //     >
-        //       {AccessControlComments(
-        //         forumThreadComments.user_id,
-        //         forumThreadComments.id
-        //       )}
-        //     </div>
-        //   </div>
-        // </div>
       )
     );
     return allForumThreadComments;
@@ -400,64 +360,7 @@ const ForumThread = (): JSX.Element => {
   };
 
   return (
-    //  <div className="">
-    //   <div className="hero position-relative d-flex flex-column align-items-center justify-content-center">
-    //     <div className="overlay bg-dark position-absolute" />
-    //     <h1 className="display-4 position-relative text-white">
-    //       {forumThread.title}
-    //     </h1>
-    //     <h4 className=" position-relative text-white">
-    //       {forumThread.category}
-    //     </h4>
-    //     <h4 className=" position-relative text-white">{forumThread.author}</h4>
-    //     <div
-    //       className=" position-relative text-white"
-    //       dangerouslySetInnerHTML={{
-    //         __html: `${forumThreadBody}`,
-    //       }}
-    //     />
-    //   </div>
-    //   <div className="container py-5">
-    //     <div className="row">
-    //       <div className="col-sm-12 col-lg-7"></div>
-    //       <div className="row">
-    //         <div className=" col-md-12 col-lg-12  mb-4">
-    //           <form onSubmit={onSubmit}>
-    //             <div className="form-group position-relative ">
-    //               <TextField
-    //                 value={body}
-    //                 style={{ textAlign: "left" }}
-    //                 placeholder="Comments?"
-    //                 multiline
-    //                 rows={5}
-    //                 className="card form-control"
-    //                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-    //                   onChange(event, setBody)
-    //                 }
-    //               />
-    //               <button
-    //                 type="submit"
-    //                 className="btn btn-primary btn-dark position-absolute bottom-0 end-0"
-    //               >
-    //                 Comment
-    //               </button>
-    //             </div>
-    //           </form>
-    //         </div>
-    //       </div>
-    //       <div className="row">
-    //         {ForumThreadCommentsDeterminer(forumThreadComments)}
-    //       </div>
-    //       <div className="col-sm-12 col-lg-2">
-    //         {AccessControlThread(forumThread.user_id)}
-    //       </div>
-    //     </div>
-    //     <Link to="/forumThreads" className="btn btn-dark ">
-    //       Back to threads
-    //     </Link>
-    //   </div>
-    // </div>
-
+   
     <Box
       sx={{
         minHeight: "100vh", // Ensure the Box takes the full height of the viewport
