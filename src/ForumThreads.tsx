@@ -14,6 +14,8 @@ import {
   InputLabel,
   Grid,
 } from "@mui/material";
+
+// Defining the structure of a forum thread object
 interface ForumThread {
   id: number;
   title: string;
@@ -23,81 +25,90 @@ interface ForumThread {
 }
 
 const ForumThreads = (): JSX.Element => {
-  const navigate = useNavigate();
-  
+  const navigate = useNavigate(); // Hook for programmatically navigating between routes
+  // State hooks for managing forum threads and the current category filter
+  const [forumThreads, setForumThreads] = useState<JSX.Element[]>([]);
+  const [currentFilter, setCurrentFilter] = useState<string>("All");
+  // const { user, setUser } = useContext(UserContext);
 
- const [forumThreads, setForumThreads] = useState<JSX.Element[]>([]);
- const [currentFilter, setCurrentFilter] = useState<string>("All");
- // const { user, setUser } = useContext(UserContext);
+  // Fetching forum threads from the backend on component mount
+  useEffect(() => {
+    const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/index`;
+    // Function to determine the content based on the fetched forum threads
+    function ForumThreadDeterminer(forumThread: ForumThread[]): any {
+      if (forumThread.length > 0) {
+        return generateForumThreadHTML(forumThread);
+      } else {
+        return NoForumThreadHTML;
+      }
+    }  
 
- useEffect(() => {
-   const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/index`;
-   function ForumThreadDeterminer(forumThread: ForumThread[]): any {
-     if (forumThread.length > 0) {
-       return generateForumThreadHTML(forumThread);
-     } else {
-       return NoForumThreadHTML;
-     }
-   }
+    // Placeholder content when no forum threads are available
+    const NoForumThreadHTML = (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        height="50vh"
+      >
+        <Typography variant="h4">No Posts In This Category yet.</Typography>
+      </Box>
+    );
 
-   const NoForumThreadHTML = (
-     <Box
-       display="flex"
-       alignItems="center"
-       justifyContent="center"
-       height="50vh"
-     >
-       <Typography variant="h4">No Posts In This Category yet.</Typography>
-     </Box>
-   );
+    // Fetching forum threads and updating state or handling errors
+    fetch(url)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then((res) => setForumThreads(ForumThreadDeterminer(res)))
+      .catch(
+        () => setForumThreads([NoForumThreadHTML]) /*navigate("/forumThreads")*/
+      ); // should be navigate("/error") but we don't have an error page
+  }, []);
 
-   fetch(url)
-     .then((res) => {
-       if (res.ok) {
-         return res.json();
-       }
-       throw new Error("Network response was not ok.");
-     })
-     .then((res) => setForumThreads(ForumThreadDeterminer(res)))
-     .catch(
-       () => setForumThreads([NoForumThreadHTML]) /*navigate("/forumThreads")*/
-     ); // should be navigate("/error") but we don't have an error page
- }, []);
+  // Function to fetch forum threads by category
+  function fetchForumThreadsByCategory(category: string): void {
+    const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/showForumThreadsByCategory/${category}`;
+    function ForumThreadDeterminer(forumThread: ForumThread[]): any {
+      if (forumThread.length > 0) {
+        return generateForumThreadHTML(forumThread);
+      } else {
+        return NoForumThreadHTMLCategory;
+      }
+    }
 
- function fetchForumThreadsByCategory(category: string): void {
-   const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/showForumThreadsByCategory/${category}`;
-   function ForumThreadDeterminer(forumThread: ForumThread[]): any {
-     if (forumThread.length > 0) {
-       return generateForumThreadHTML(forumThread);
-     } else {
-       return NoForumThreadHTMLCategory;
-     }
-   }
+    // Placeholder content when no forum threads are available in the selected category
+    const NoForumThreadHTMLCategory = (
+      <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
+        <h4>No Posts In This Category yet.</h4>
+      </div>
+    );
 
-   const NoForumThreadHTMLCategory = (
-     <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
-       <h4>No Posts In This Category yet.</h4>
-     </div>
-   );
-   fetch(url)
-     .then((res) => {
-       if (res.ok) {
-         return res.json();
-       }
-       throw new Error("Network response was not ok.");
-     })
-     .then((res) => {
-       setForumThreads(ForumThreadDeterminer(res));
-     })
-     .catch();
- }
+    // Fetching forum threads by category and updating state or handling errors
+    fetch(url)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then((res) => {
+        setForumThreads(ForumThreadDeterminer(res));
+      })
+      .catch(); // Placeholder for error handling
+  }
 
- function FilterbyCategory(event: React.ChangeEvent<any>): void {
-   setCurrentFilter(event.target.value);
-   fetchForumThreadsByCategory(event.target.value);
- }
+  // Handler for changing the category filter
+  function FilterbyCategory(event: React.ChangeEvent<any>): void {
+    setCurrentFilter(event.target.value);
+    fetchForumThreadsByCategory(event.target.value);
+  }
 
 
+  // Function to generate JSX elements for displaying forum threads
   function generateForumThreadHTML(forumThreads: ForumThread[]): JSX.Element[] {
     const allForumThread = forumThreads.map((forumThread, index) => (
       <Grid item xs={12} key={index}>
@@ -142,6 +153,7 @@ const ForumThreads = (): JSX.Element => {
   //   </Box>
   // );
 
+  // Rendering the component with a filter for categories and the list of forum threads
   return (
     <>
       <Box sx={{ bgcolor: "background.paper", pt: 8, pb: 6 }}>

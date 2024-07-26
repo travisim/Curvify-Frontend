@@ -15,6 +15,7 @@ import About from "./About";
 import Settings from "./Settings";
 import './App.css'
 
+// Defining the User interface for TypeScript type checking
 interface User {
   id: number;
   username: string;
@@ -23,11 +24,14 @@ interface User {
   updated_at: string;
   avatar: string;
 }
+// Creating a context for user state to be accessible throughout the component tree
 export const UserContext = createContext<null | { user: User, setUser: React.Dispatch<React.SetStateAction<User>> }>(null);
 
 const App = () => {
+  // State hook for managing user state
   const [user, setUser] = useState<User | any>(null);
 
+  // Effect hook for fetching user data if a token is stored in localStorage
   useEffect(() => {
     if (localStorage.getItem("token")) {
       fetch("/login", {
@@ -35,7 +39,7 @@ const App = () => {
       })
         .then((response) => response.json())
         .then((user) => {
-          setUser(user);
+          setUser(user); // Setting the user state with fetched data
         });
     }
   }, []);
@@ -50,7 +54,7 @@ const App = () => {
   // }
 
 
-  
+  // Main return statement rendering the app structure with routing
   return (
     <div>
       <Router>

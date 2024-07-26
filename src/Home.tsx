@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
+    // Box component used as the outer container with full viewport width and height
     <Box
       sx={{
         width: "100vw",

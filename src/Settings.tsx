@@ -20,8 +20,10 @@ import { useState } from "react";
 function Settings() {
 
 
+  // State to store the name
   const [name, setName] = useState("");
 
+  // Handler for input changes, updates state
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     setFunction: React.Dispatch<React.SetStateAction<string>>

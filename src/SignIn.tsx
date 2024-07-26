@@ -23,12 +23,14 @@ interface User {
 const SignIn = () => {
   const navigate = useNavigate();
 
+  // State hooks for form inputs and error handling
   const [username, setUsername] = useState<string>("");
   const { user, setUser } = useContext(UserContext);
   const [password, setPassword] = useState<string>("");
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
+  // Handler for input changes
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     setFunction: React.Dispatch<React.SetStateAction<string>>
@@ -36,6 +38,7 @@ const SignIn = () => {
     setFunction(event.target.value);
   };
 
+  // Handler for form submission
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const signInContent = {
@@ -43,6 +46,7 @@ const SignIn = () => {
       password,
     };
 
+    // Fetch request to backend API for login
     fetch(`${process.env.REACT_APP_BACKEND_API_URL}/login`, {
       method: "POST",
       headers: {
@@ -53,15 +57,18 @@ const SignIn = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
+          // Handle login error
           setErrorMessage("Username or password is incorrect.");
           setSnackbarOpen(true);
           return;
         }
+        // On successful login
         localStorage.setItem("token", data.token);
         setUser(data.user);
         navigate(`/forumThreads`);
       })
       .catch((error) => {
+        // Handle fetch error
         setErrorMessage("An error occurred during login.");
         setSnackbarOpen(true);
       });
