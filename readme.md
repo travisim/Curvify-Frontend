@@ -14,7 +14,7 @@ Developed and tested on macOS Sonoma
 Install homebrew  
 
 ### Step 1  
-install npm 
+Install npm 
 
 ```
 brew install npm
