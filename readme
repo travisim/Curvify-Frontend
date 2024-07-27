@@ -19,14 +19,18 @@ install homebrew
 
 ### step 1  
 install npm 
+
 ```
 brew install npm
 ```
+
 ### step 2  
 install bundles using npm
+
 ```
 npm install
 ```
+
 ### step 3
 start frontend
 
