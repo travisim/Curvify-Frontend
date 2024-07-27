@@ -14,20 +14,27 @@ Developed and tested on macOS Sonoma
 Install homebrew  
 
 ### Step 1  
+Clone repository
+
+```
+git clone https://github.com/travisim/Curvify-Frontend.git
+```
+
+
+### Step 1
 Install npm 
 
 ```
 brew install npm
 ```
-
-### Step 2  
+### Step 3
 Install bundles using npm
 
 ```
 npm install
 ```
 
-### Step 3
+### Step 4
 Start frontend
 
 ```
