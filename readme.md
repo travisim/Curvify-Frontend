@@ -1,21 +1,16 @@
-
-
-
 # Curvify frontend
 
 
 #### Description:
-Frontend for the curvify website
-uses MUI
+Frontend for the curvify website  
+uses MUI  
+instructions to run locally below  
 
-
-
-to run locally
 ## warning 
-Developed and tested on macOS sonoma, login for cookies works on Chrome but not Safari
+Developed and tested on macOS sonoma, login for cookies works on Chrome but not Safari  
 
 ### pre-requisites
-install homebrew
+install homebrew  
 
 ### step 1  
 install npm 
