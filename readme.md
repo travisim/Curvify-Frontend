@@ -6,8 +6,8 @@ Frontend for the curvify website
 uses MUI  
 works with backend: github.com/travisim/Curvify-Backend/
 
-## Warning 
-Developed and tested on macOS Sonoma
+### Warning 
+Developed and tested on macOS Sonoma 
 
 ## Instructions
 ### pre-requisites
