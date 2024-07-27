@@ -67,6 +67,7 @@ const SignUp = () => {
       method: "POST",
       headers: {
         // "X-CSRF-Token": token,
+        authentication: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(signInContent),
@@ -81,7 +82,7 @@ const SignUp = () => {
           setUser(data.user); // Update user context
           setTimeout(() => {
             navigate(`/forumThreads`); // Navigate to forum threads after 2 seconds
-          }, 2000);
+          }, 0);
         } else {
           setErrorMessage(data.errors[0]); // Set error message from response
           setSnackbarOpen(true);

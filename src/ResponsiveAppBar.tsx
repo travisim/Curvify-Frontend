@@ -28,7 +28,7 @@ import {
   Tooltip,
   useTheme,
 } from "@mui/material";
-import { useContext, useMemo } from "react";
+import { useContext, useMemo,useEffect } from "react";
 import { ThemeContext } from "./theme/index";
 import EditForumThreadComment from "./EditForumThreadComment";
 
@@ -49,18 +49,37 @@ function ResponsiveAppBar() {
 
   // Function to handle logout
   function handleLogout() {
+    localStorage.removeItem("token");
     setUser(null);
-    fetch("/logout", {
-      method: "POST",
-      credentials: "include", // Important to include credentials to ensure cookies are sent
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data.message))
-      .catch((error) => console.error("Error:", error));
-    navigate(`/forumThreads`);
-    console.log("logged out");
+    // fetch("/logout", {
+    //   method: "POST",
+    //   credentials: "include", // Important to include credentials to ensure cookies are sent
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data.message))
+    //   .catch((error) => console.error("Error:", error));
+    // navigate(`/forumThreads`);
+    // console.log("logged out");
   }
 
+  useEffect(() => {
+    // Check local storage for token
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Optionally, you can verify the token with the backend here
+      fetch(`${process.env.REACT_APP_BACKEND_API_URL}/api/v1/users/me`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => response.json()).then((data) => {
+        console.log(data);
+        setUser(data);
+      });
+          
+     
+    }
+  }, []);
 
 
   // State hooks for managing menu anchor elements

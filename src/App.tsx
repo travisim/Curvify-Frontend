@@ -15,6 +15,7 @@ import About from "./About";
 import Settings from "./Settings";
 import './App.css'
 
+
 // Defining the User interface for TypeScript type checking
 interface User {
   name: string;
@@ -60,6 +61,8 @@ const App = () => {
   return (
     <div>
       <Router>
+        
+        
         <UserContext.Provider value={{ user: user, setUser: setUser }}>
           <ResponsiveAppBar />
           <Routes>

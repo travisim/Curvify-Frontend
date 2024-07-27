@@ -47,7 +47,7 @@ const SignIn = () => {
     };
 
     // Fetch request to backend API for login
-    fetch(`${process.env.REACT_APP_BACKEND_API_URL}/login`, {
+    fetch(`${process.env.REACT_APP_BACKEND_API_URL}/api/v1/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ const SignIn = () => {
           return;
         }
         // On successful login
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("jwt", data.token);
         setUser(data.user);
         navigate(`/forumThreads`);
       })

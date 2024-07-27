@@ -90,6 +90,8 @@ const EditForumThread: React.FC = () => {
       method: "PUT",
       headers: {
         // "X-CSRF-Token": token,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+
         "Content-Type": "application/json",
       },
       body: JSON.stringify(forumThreadContent),

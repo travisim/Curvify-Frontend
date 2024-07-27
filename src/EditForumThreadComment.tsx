@@ -93,6 +93,7 @@ const EditForumThreadComment = () => {
       method: "PUT",
       headers: {
         // "X-CSRF-Token": token,
+        authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(forumThreadCommentContent),

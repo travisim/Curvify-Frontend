@@ -19,7 +19,7 @@ import { useTheme } from "@mui/material/styles";
 const NewForumThread = () => {
   const navigate = useNavigate(); // Hook to programmatically navigate
   const [title, setTitle] = useState<string>(""); // State for the thread title
-  const [category, setCategory] = useState<string>("Barter"); // State for the thread category, defaulting to "Barter"
+  const [category, setCategory] = useState<string>("Trade"); // State for the thread category, defaulting to "Barter"
   const [body, setBody] = useState<string>(""); // State for the thread body
   const { user, setUser } = useContext(UserContext); // Using context to access the current user
   const theme = useTheme(); // Accessing the current theme
@@ -79,7 +79,7 @@ const NewForumThread = () => {
       method: "POST",
       headers: {
         // "X-CSRF-Token": token,
-        Author: "dwwd",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(forumThreadContent),

@@ -128,6 +128,8 @@ const ForumThread = (): JSX.Element => {
       method: "DELETE",
       headers: {
         // "X-CSRF-Token": token,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+
         "Content-Type": "application/json",
       },
     })
@@ -150,6 +152,8 @@ const ForumThread = (): JSX.Element => {
       method: "DELETE",
       headers: {
         // "X-CSRF-Token": token,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+
         "Content-Type": "application/json",
       },
     })
@@ -333,9 +337,10 @@ const ForumThread = (): JSX.Element => {
     const forumThreadCommentContent = {
       body: stripHtmlEntities(body),
       author: user.username,
-      user_id: user.id,
       forum_thread_id: params.id,
+      user_id: user.id
     };
+    console.log(user)
     setBody("");
     event.preventDefault();
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread_comments/create`;
@@ -344,6 +349,8 @@ const ForumThread = (): JSX.Element => {
       method: "POST",
       headers: {
         // "X-CSRF-Token": token,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+
         "Content-Type": "application/json",
       },
       body: JSON.stringify(forumThreadCommentContent),
