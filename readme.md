@@ -4,30 +4,31 @@
 #### Description:
 Frontend for the curvify website  
 uses MUI  
-instructions to run locally below  
+works with backend: github.com/travisim/Curvify-Backend/
 
-## warning 
-Developed and tested on macOS sonoma, login for cookies works on Chrome but not Safari  
+## Warning 
+Developed and tested on macOS Sonoma
 
+## Instructions
 ### pre-requisites
-install homebrew  
+Install homebrew  
 
-### step 1  
+### Step 1  
 install npm 
 
 ```
 brew install npm
 ```
 
-### step 2  
-install bundles using npm
+### Step 2  
+Install bundles using npm
 
 ```
 npm install
 ```
 
-### step 3
-start frontend
+### Step 3
+Start frontend
 
 ```
 npm start
