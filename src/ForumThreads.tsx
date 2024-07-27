@@ -206,15 +206,7 @@ const ForumThreads = (): JSX.Element => {
           <Grid container spacing={4}>
             {forumThreads}
           </Grid>
-          <Button
-            component={Link}
-            to="/"
-            variant="contained"
-            color="primary"
-            sx={{ mt: 4 }}
-          >
-            About
-          </Button>
+        
         </Container>
       </Box>
     </>

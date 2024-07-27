@@ -191,7 +191,7 @@ const ForumThread = (): JSX.Element => {
         //   </Button>
         // </Box>
 
-         <div>
+        <div>
           <div className="btn-group mr-2" role="group">
             <Link
               to={`/editForumThreadComment/${forumThreadCommentID}`}
@@ -313,13 +313,7 @@ const ForumThread = (): JSX.Element => {
     >
       <Typography variant="h4" color="text.primary">
         No Comments yet, why not{" "}
-        <Link
-     
-          to="/newforumThreadComments"
-         
-          color="primary"
-    
-        >
+        <Link to="/newforumThreadComments" color="primary">
           create one
         </Link>
       </Typography>
@@ -504,7 +498,14 @@ const ForumThread = (): JSX.Element => {
                 </StyledForm>
               </Grid>
             </Grid>
-            <Grid container spacing={0} justifyContent="center" alignItems="center">{ForumThreadCommentsDeterminer(forumThreadComments)}</Grid>
+            <Grid
+              container
+              spacing={0}
+              justifyContent="center"
+              alignItems="center"
+            >
+              {ForumThreadCommentsDeterminer(forumThreadComments)}
+            </Grid>
           </Grid>
           <Grid item xs={7}>
             {AccessControlThread(forumThread.user_id)}
