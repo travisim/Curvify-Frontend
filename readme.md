@@ -21,7 +21,7 @@ git clone https://github.com/travisim/Curvify-Frontend.git
 ```
 
 
-### Step 1
+### Step 2
 Install npm 
 
 ```
