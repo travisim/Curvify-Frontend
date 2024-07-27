@@ -11,6 +11,8 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+
+// Defining the structure of a forum thread for TypeScript
 interface ForumThread {
   title: string;
   category: string;
@@ -18,14 +20,17 @@ interface ForumThread {
 }
 
 const EditForumThread: React.FC = () => {
+  // Hooks for navigating and accessing URL parameters
   const params = useParams();
   const navigate = useNavigate();
+  // State for storing and updating the forum thread
   const [forumThread, setForumThread] = useState<ForumThread>({
     title: "",
     category: "",
     body: "",
   });
 
+  // Function to strip HTML entities to prevent XSS attacks
   const stripHtmlEntities = (str: string): string => {
     return String(str)
       .replace(/\n/g, "<br> <br>")
@@ -40,6 +45,7 @@ const EditForumThread: React.FC = () => {
     setFunction(event.target.value);
   };
 
+  // Effect hook to fetch forum thread data based on URL parameter (thread ID)
   useEffect(() => {
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/show/${params.id}`;
     fetch(url)
@@ -53,6 +59,7 @@ const EditForumThread: React.FC = () => {
       .catch();
   }, [params.id]);
 
+  // Handler for form input changes, updating the forum thread state
   const handleChange = (e: React.ChangeEvent<any>): void => {
     setForumThread({
       ...forumThread,
@@ -60,6 +67,7 @@ const EditForumThread: React.FC = () => {
     });
   };
 
+  // Handler for form submission, including data validation and API call for updating the thread
   const onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/update/${params.id}`;
@@ -82,6 +90,8 @@ const EditForumThread: React.FC = () => {
       method: "PUT",
       headers: {
         // "X-CSRF-Token": token,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+
         "Content-Type": "application/json",
       },
       body: JSON.stringify(forumThreadContent),
@@ -96,6 +106,7 @@ const EditForumThread: React.FC = () => {
       .catch((error) => console.log(error.message));
   };
 
+  // Rendering the form for editing a forum thread
   return (
     <Box
       justifyContent="center"
@@ -125,7 +136,7 @@ const EditForumThread: React.FC = () => {
               name="title"
               id="title"
               required
-              defaultValue={forumThread.title}
+              value={forumThread.title ? forumThread.title : ""}
               onChange={handleChange}
             />
           </FormControl>

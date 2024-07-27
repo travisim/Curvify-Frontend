@@ -28,69 +28,61 @@ import {
   Tooltip,
   useTheme,
 } from "@mui/material";
-import { useContext, useMemo } from "react";
+import { useContext, useMemo,useEffect } from "react";
 import { ThemeContext } from "./theme/index";
+import EditForumThreadComment from "./EditForumThreadComment";
 
+// Defining constants for navigation and settings options
 const pages = ["About"];
-const settings = ["Profile"]; //, "Account", "Dashboard", "Logout"];
+const settings = [/*"Profile"]; , "Account", "Dashboard",*/ "Logout"];
 
+// Main component function
 function ResponsiveAppBar() {
+  // Hooks for navigation and theme context
   const navigate = useNavigate();
 
   const theme = useTheme();
   const { switchColorMode } = useContext(ThemeContext);
-  const activateName = useMemo(
-    () => (theme.palette.mode === "dark" ? "Light" : "Dark"),
-    [theme]
-  );
 
+  // Using UserContext to manage user state
   const { user, setUser } = React.useContext(UserContext);
-  function displayLoginStatus() {
-    if (user === null) {
-      return <Typography textAlign="center"></Typography>;
-    } else {
-      return (
-        <Typography textAlign="center">Welcome back {user.username}</Typography>
-      );
-    }
-  }
 
+  // Function to handle logout
   function handleLogout() {
+    localStorage.removeItem("token");
     setUser(null);
-    fetch("/logout", {
-      method: "POST",
-      credentials: "include", // Important to include credentials to ensure cookies are sent
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data.message))
-      .catch((error) => console.error("Error:", error));
-    navigate(`/forumThreads`);
-    console.log("logged out");
+    // fetch("/logout", {
+    //   method: "POST",
+    //   credentials: "include", // Important to include credentials to ensure cookies are sent
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data.message))
+    //   .catch((error) => console.error("Error:", error));
+    // navigate(`/forumThreads`);
+    // console.log("logged out");
   }
 
-  function displaySignInOutbuttons() {
-    if (user === null) {
-      return (
-        <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <MenuItem component={Link} to="/signIn">
-            <Typography textAlign="center">Sign In</Typography>
-          </MenuItem>
-
-          <MenuItem component={Link} to="/signUp">
-            <Typography textAlign="center">Sign up</Typography>
-          </MenuItem>
-        </Box>
-      );
-    } else {
-      return (
-        <MenuItem onClick={handleLogout}>
-          <Typography textAlign="center">Logout</Typography>
-        </MenuItem>
-      );
+  useEffect(() => {
+    // Check local storage for token
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Optionally, you can verify the token with the backend here
+      fetch(`${process.env.REACT_APP_BACKEND_API_URL}/api/v1/users/me`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => response.json()).then((data) => {
+        console.log(data);
+        setUser(data);
+      });
+          
+     
     }
-  }
-  //   console.log(displayLoginStatus());
+  }, []);
 
+
+  // State hooks for managing menu anchor elements
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -98,6 +90,7 @@ function ResponsiveAppBar() {
     null
   );
 
+  // Handlers for opening and closing navigation and user menus
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -112,9 +105,21 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const handleMenuItemClick = (setting: string) => {
+    if (setting === "Logout") {
+      handleLogout();
+    }
+    handleCloseUserMenu();
+  };
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: "background.default",
+        color: "text.primary",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <MenuItem>
@@ -229,8 +234,6 @@ function ResponsiveAppBar() {
           </MenuItem>
 
           <Box sx={{ flexGrow: 2, flexDirection: "row" }}></Box>
-          {displaySignInOutbuttons()}
-          <Box>{displayLoginStatus()}</Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Toggle Dark/Light Mode">
@@ -246,7 +249,13 @@ function ResponsiveAppBar() {
                 )}
               </IconButton>
             </Tooltip>
-            <Tooltip title="Settings">
+          
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            {user ? (
+              <>
+                  <Tooltip title="Settings">
               <IconButton
                 sx={{ mr: 1 }}
                 color="inherit"
@@ -256,61 +265,52 @@ function ResponsiveAppBar() {
                 <SettingsIcon />
               </IconButton>
             </Tooltip>
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              {/* <Avatar alt="Remy Sharp" static/images/avatar/2src="/static/images/avatar/2.jpg" /> */}
-            </IconButton>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt={user.username} src={user.avatar || ""}>
+                      {!user.avatar && user.username.charAt(0)}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <Typography textAlign="center" sx={{ p: 2 }}>
+                    Welcome, {user.username}
+                  </Typography>
+                  {settings.map((setting) => (
+                    <MenuItem
+                      key={setting}
+                      onClick={() => handleMenuItemClick(setting)}
+                    >
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+            ) : (
+              <Button
+                component={Link}
+                to="/signIn"
+                variant="contained"
+                color="primary"
+              >
+                <Typography textAlign="center">Sign In</Typography>
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </Container>
