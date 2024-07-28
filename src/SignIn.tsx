@@ -12,7 +12,7 @@ import {
   Alert,
 } from "@mui/material";
 
-interface User {
+interface UserStorage {
   id: number;
   username: string;
   created_at: string;
@@ -63,7 +63,7 @@ const SignIn = () => {
           return;
         }
         // On successful login
-        localStorage.setItem("jwt", data.token);
+        localStorage.setItem("token", data.token);
         setUser(data.user);
         navigate(`/forumThreads`);
       })

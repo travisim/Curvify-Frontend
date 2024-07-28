@@ -212,26 +212,8 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          <MenuItem>
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/forumThreads"
-              sx={{
-                mr: 2,
-                display: { xs: "flex", md: "none" },
-                flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              Curvify
-            </Typography>
-          </MenuItem>
+         
+          
 
           <Box sx={{ flexGrow: 2, flexDirection: "row" }}></Box>
 

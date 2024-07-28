@@ -17,7 +17,7 @@ import './App.css'
 
 
 // Defining the User interface for TypeScript type checking
-interface User {
+interface UserStorage {
   name: string;
   id: number;
   username: string;
@@ -28,33 +28,20 @@ interface User {
   password: string;
 }
 // Creating a context for user state to be accessible throughout the component tree
-export const UserContext = createContext<null | { user: User, setUser: React.Dispatch<React.SetStateAction<User>> }>(null);
+export const UserContext = createContext<null | {
+  user: UserStorage;
+  setUser: React.Dispatch<React.SetStateAction<UserStorage>>;
+}>(null);
 
 const App = () => {
   // State hook for managing user state
-  const [user, setUser] = useState<User | any>(null);
+  const [user, setUser] = useState<UserStorage | any>(null);
 
-  // Effect hook for fetching user data if a token is stored in localStorage
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      fetch("/login", {
-        headers: { Authenticate: localStorage.token },
-      })
-        .then((response) => response.json())
-        .then((user) => {
-          setUser(user); // Setting the user state with fetched data
-        });
-    }
-  }, []);
+
 
  
 
-  // function handleLogout() {
-  //   setUser(null);
-  //   localStorage.removeItem("token");
-  //   navigate(`/forumThreads`);
-  //   console.log("logged out");
-  // }
+  
 
 
   // Main return statement rendering the app structure with routing

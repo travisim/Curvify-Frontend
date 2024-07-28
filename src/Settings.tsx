@@ -22,7 +22,7 @@ import { UserContext } from "./App";
 import { Container } from "@mui/material";
 import { useState, useEffect } from "react";
 
-interface User {
+interface UserStorage {
   id: number;
   username: string;
   avatar: string;
@@ -33,12 +33,12 @@ interface User {
 function Settings() {
   // Using UserContext to manage user state
   const { user, setUser } = React.useContext(UserContext);
- const [userTemp, setUserTemp] = useState<User>({
+ const [userTemp, setUserTemp] = useState<UserStorage>({
    id: 0,
    username: "",
    avatar: "",
    email: "",
-    password: ""
+   password: "",
  });
   const params = useParams();
   const navigate = useNavigate();

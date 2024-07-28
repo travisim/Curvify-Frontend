@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 // Defining the structure of a forum thread object
-interface ForumThread {
+interface ForumThreadStorage {
   id: number;
   title: string;
   category: string;
@@ -35,7 +35,7 @@ const ForumThreads = (): JSX.Element => {
   useEffect(() => {
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/index`;
     // Function to determine the content based on the fetched forum threads
-    function ForumThreadDeterminer(forumThread: ForumThread[]): any {
+    function ForumThreadDeterminer(forumThread: ForumThreadStorage[]): any {
       if (forumThread.length > 0) {
         return generateForumThreadHTML(forumThread);
       } else {
@@ -72,7 +72,7 @@ const ForumThreads = (): JSX.Element => {
   // Function to fetch forum threads by category
   function fetchForumThreadsByCategory(category: string): void {
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/showForumThreadsByCategory/${category}`;
-    function ForumThreadDeterminer(forumThread: ForumThread[]): any {
+    function ForumThreadDeterminer(forumThread: ForumThreadStorage[]): any {
       if (forumThread.length > 0) {
         return generateForumThreadHTML(forumThread);
       } else {
@@ -109,7 +109,9 @@ const ForumThreads = (): JSX.Element => {
 
 
   // Function to generate JSX elements for displaying forum threads
-  function generateForumThreadHTML(forumThreads: ForumThread[]): JSX.Element[] {
+  function generateForumThreadHTML(
+    forumThreads: ForumThreadStorage[]
+  ): JSX.Element[] {
     const allForumThread = forumThreads.map((forumThread, index) => (
       <Grid item xs={12} key={index}>
         <Card sx={{ mb: 2 }}>
@@ -156,7 +158,7 @@ const ForumThreads = (): JSX.Element => {
   // Rendering the component with a filter for categories and the list of forum threads
   return (
     <>
-      <Box sx={{ bgcolor: "background.paper", pt: 8, pb: 6 }}>
+      <Box sx={{ bgcolor: "background.paper", pt: 8, pb: 6, height: "100%" }}>
         <Container maxWidth="sm">
           <Typography
             component="h1"
@@ -218,7 +220,6 @@ const ForumThreads = (): JSX.Element => {
           <Grid container spacing={4}>
             {forumThreads}
           </Grid>
-        
         </Container>
       </Box>
     </>

@@ -13,10 +13,11 @@ import {
 } from "@mui/material";
 
 // Defining the structure of a forum thread for TypeScript
-interface ForumThread {
+interface ForumThreadStorage {
   title: string;
   category: string;
   body: string;
+  id?: number;
 }
 
 const EditForumThread: React.FC = () => {
@@ -24,7 +25,7 @@ const EditForumThread: React.FC = () => {
   const params = useParams();
   const navigate = useNavigate();
   // State for storing and updating the forum thread
-  const [forumThread, setForumThread] = useState<ForumThread>({
+  const [forumThread, setForumThread] = useState<ForumThreadStorage>({
     title: "",
     category: "",
     body: "",
@@ -102,7 +103,7 @@ const EditForumThread: React.FC = () => {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(() => navigate(`/forumThreads`))
+      .then(() => navigate(`/forumThread/${forumThread.id}`))
       .catch((error) => console.log(error.message));
   };
 

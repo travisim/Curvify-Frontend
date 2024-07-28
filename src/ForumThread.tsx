@@ -269,17 +269,15 @@ const ForumThread = (): JSX.Element => {
     <Box
       sx={{
         width: "100vw",
-        height: "50vh",
+        height: "10vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
       <Typography variant="h4" color="text.primary">
-        No Comments yet, why not{" "}
-        <Link to="/newforumThreadComments" color="primary">
-          create one
-        </Link>
+        No Comments yet
+      
       </Typography>
     </Box>
   );
