@@ -72,10 +72,9 @@ function ResponsiveAppBar() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }).then((response) => response.json())
-        .then((data) => {
-        // console.log(data,"userdata");
-        setUser(data.user);
+      }).then((response) => response.json()).then((data) => {
+        console.log(data);
+        setUser(data);
       });
           
      
@@ -250,8 +249,8 @@ function ResponsiveAppBar() {
             </Tooltip>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt={""} src={user.username }>
-                      {user.username.charAt(0)}
+                    <Avatar alt={user.username} src={user.avatar || ""}>
+                      {!user.avatar && user.username.charAt(0)}
                     </Avatar>
                   </IconButton>
                 </Tooltip>
