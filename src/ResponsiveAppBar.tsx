@@ -251,7 +251,7 @@ function ResponsiveAppBar() {
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt={user.username} src={user.avatar || ""}>
-                      {user.username.length>=1?user.username.charAt(0):"T"}
+                      {user.username != undefined?user.username.charAt(0):"?"}
                     </Avatar>
                   </IconButton>
                 </Tooltip>

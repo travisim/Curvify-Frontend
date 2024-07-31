@@ -57,6 +57,7 @@ const SignIn = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
+          console.log(data);
           // Handle login error
           setErrorMessage("Username or password is incorrect.");
           setSnackbarOpen(true);

@@ -31,7 +31,19 @@ interface UserStorage {
 export const UserContext = createContext<null | {
   user: UserStorage;
   setUser: React.Dispatch<React.SetStateAction<UserStorage>>;
-}>(null);
+}>({
+  user: {
+    name: "",
+    id: 0,
+    username: "",
+    email: "",
+    created_at: "",
+    updated_at: "",
+    avatar: "",
+    password: "",
+  },
+  setUser: () => null,
+});
 
 const App = () => {
   // State hook for managing user state
