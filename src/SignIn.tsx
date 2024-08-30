@@ -7,7 +7,6 @@ import {
   TextField,
   Button,
   Box,
-  Grid,
   Snackbar,
   Alert,
 } from "@mui/material";
@@ -23,14 +22,14 @@ interface UserStorage {
 const SignIn = () => {
   const navigate = useNavigate();
 
-  // State hooks for form inputs and error handling
+
   const [username, setUsername] = useState<string>("");
   const { user, setUser } = useContext(UserContext);
   const [password, setPassword] = useState<string>("");
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  // Handler for input changes
+
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     setFunction: React.Dispatch<React.SetStateAction<string>>
@@ -46,7 +45,7 @@ const SignIn = () => {
       password,
     };
 
-    // Fetch request to backend API for login
+
     fetch(`${process.env.REACT_APP_BACKEND_API_URL}/api/v1/auth/login`, {
       method: "POST",
       headers: {

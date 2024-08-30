@@ -19,23 +19,18 @@ const About = () => {
           <Typography
             variant="h2"
             component="h1"
-            gutterBottom // Adds bottom margin
+            gutterBottom
             color="text.primary"
           >
             About
           </Typography>
           <Typography variant="h5" paragraph color="text.secondary">
-            This project was driven by a realization that for some modules
-            (BSP1702) require students to buy a physical textbook for use in the
-            finals and the use of a printed pdf copy of the textbook would be
-            prohibited. Additionally, since university students are cash
-            strapped, trading textbooks/notes would be a way to increase
-            liquidity in this market place.
+            Curvify is a platform for students to trade textbooks and notes.
           </Typography>
           <Box sx={{ my: 4 }}>
             <Button
-              component={Link} // Makes the button act as a React Router Link
-              to="/forumThreads" // The path to navigate to when the button is clicked
+              component={Link}
+              to="/forumThreads"
               variant="contained"
               color="primary"
               size="large"

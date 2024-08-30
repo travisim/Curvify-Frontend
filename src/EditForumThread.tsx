@@ -12,7 +12,7 @@ import {
   InputLabel,
 } from "@mui/material";
 
-// Defining the structure of a forum thread for TypeScript
+
 interface ForumThreadStorage {
   title: string;
   category: string;
@@ -21,17 +21,17 @@ interface ForumThreadStorage {
 }
 
 const EditForumThread: React.FC = () => {
-  // Hooks for navigating and accessing URL parameters
+
   const params = useParams();
   const navigate = useNavigate();
-  // State for storing and updating the forum thread
+
   const [forumThread, setForumThread] = useState<ForumThreadStorage>({
     title: "",
     category: "",
     body: "",
   });
 
-  // Function to strip HTML entities to prevent XSS attacks
+
   const stripHtmlEntities = (str: string): string => {
     return String(str)
       .replace(/\n/g, "<br> <br>")
@@ -46,7 +46,7 @@ const EditForumThread: React.FC = () => {
     setFunction(event.target.value);
   };
 
-  // Effect hook to fetch forum thread data based on URL parameter (thread ID)
+
   useEffect(() => {
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/show/${params.id}`;
     fetch(url)
@@ -60,7 +60,7 @@ const EditForumThread: React.FC = () => {
       .catch();
   }, [params.id]);
 
-  // Handler for form input changes, updating the forum thread state
+
   const handleChange = (e: React.ChangeEvent<any>): void => {
     setForumThread({
       ...forumThread,
@@ -68,7 +68,7 @@ const EditForumThread: React.FC = () => {
     });
   };
 
-  // Handler for form submission, including data validation and API call for updating the thread
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/update/${params.id}`;
@@ -107,7 +107,7 @@ const EditForumThread: React.FC = () => {
       .catch((error) => console.log(error.message));
   };
 
-  // Rendering the form for editing a forum thread
+
   return (
     <Box
       justifyContent="center"
@@ -159,7 +159,7 @@ const EditForumThread: React.FC = () => {
               <MenuItem value="Other">Other</MenuItem>
             </Select>
           </FormControl>
-          {/* ["Trade", "Buy with AvoCurve Coin", "Donations", "Other"] */}
+
 
           <FormControl fullWidth margin="normal">
             <TextField
@@ -191,66 +191,6 @@ const EditForumThread: React.FC = () => {
       </Box>
     </Box>
 
-    // <div className="container mt-5">
-    //   <div className="row">
-    //     <div className="col-sm-12 col-lg-6 offset-lg-3">
-    //       <h1 className="font-weight-normal mb-5">Edit Thread</h1>
-    //       <form onSubmit={onSubmit}>
-    //         <div className="form-group">
-    //           <label htmlFor="title">Thread Name</label>
-    //           <input
-    //             type="text"
-    //             name="title"
-    //             id="title"
-    //             className="form-control"
-    //             required
-    //             defaultValue={forumThread.title}
-    //             onChange={handleChange}
-    //           />
-    //         </div>
-    //         <div className="form-group">
-    //           <label htmlFor="category">
-    //             Category name
-    //             <select
-    //               name="category"
-    //               id="category"
-    //               className="form-control"
-    //               required
-    //               value={forumThread.category}
-    //               onChange={handleChange}
-    //               // defaultValue="Barter"
-    //             >
-    //               <option value="Barter">Trade</option>
-    //               <option value="Buy with AvoCurve Coin">
-    //                 Buy with AvoCurve Coin
-    //               </option>
-    //               <option value="Giveaway">Giveaway</option>
-    //               <option value="Other">Other</option>
-    //             </select>
-    //           </label>
-    //         </div>
-    //         <div className="form-group">
-    //           <label htmlFor="body">Body</label>
-    //           <textarea
-    //             className="form-control"
-    //             id="body"
-    //             name="body"
-    //             rows={5}
-    //             required
-    //             value={forumThread.body}
-    //             onChange={handleChange}
-    //           />
-    //         </div>
-    //         <button type="submit" className="btn btn-dark mt-3">
-    //           Edit Thread
-    //         </button>
-    //         <Link to="/forumThreads" className="btn btn-dark mt-3 ">
-    //           Back to threads
-    //         </Link>
-    //       </form>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

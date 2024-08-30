@@ -3,8 +3,6 @@ import {
   Box,
   TextField,
   Typography,
-  Select,
-  MenuItem,
   Button,
   Avatar,
   Table,
@@ -31,7 +29,7 @@ interface UserStorage {
 }
 
 function Settings() {
-  // Using UserContext to manage user state
+
   const { user, setUser } = React.useContext(UserContext);
  const [userTemp, setUserTemp] = useState<UserStorage>({
    id: 0,
@@ -43,7 +41,7 @@ function Settings() {
   const params = useParams();
   const navigate = useNavigate();
 
-  // Handler for form input changes, updating the forum thread state
+
   const handleChange = (e: React.ChangeEvent<any>): void => {
     setUserTemp({
       ...userTemp,

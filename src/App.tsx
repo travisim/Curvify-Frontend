@@ -16,7 +16,7 @@ import Settings from "./Settings";
 import './App.css'
 
 
-// Defining the User interface for TypeScript type checking
+
 interface UserStorage {
   name: string;
   id: number;
@@ -27,7 +27,7 @@ interface UserStorage {
   avatar: string;
   password: string;
 }
-// Creating a context for user state to be accessible throughout the component tree
+
 export const UserContext = createContext<null | {
   user: UserStorage;
   setUser: React.Dispatch<React.SetStateAction<UserStorage>>;
@@ -46,7 +46,7 @@ export const UserContext = createContext<null | {
 });
 
 const App = () => {
-  // State hook for managing user state
+
   const [user, setUser] = useState<UserStorage | any>(null);
 
 
@@ -56,7 +56,7 @@ const App = () => {
   
 
 
-  // Main return statement rendering the app structure with routing
+
   return (
     <div>
       <Router>

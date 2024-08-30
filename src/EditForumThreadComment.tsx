@@ -11,7 +11,7 @@ import {
   InputLabel,
 } from "@mui/material";
 
-// Defining the structure of a forum thread comment for TypeScript
+
 interface ForumThreadCommentStorage {
   forum_thread_id: any;
   id: number;
@@ -22,10 +22,10 @@ interface ForumThreadCommentStorage {
 }
 
 const EditForumThreadComment = () => {
-  // Hooks for navigating and accessing URL parameters
+
   const params = useParams();
   const navigate = useNavigate();
-  // State for storing and updating the forum thread comment
+
   const [forumThreadComment, setForumThreadComment] =
     useState<ForumThreadCommentStorage>({
       forum_thread_id: "",
@@ -67,7 +67,7 @@ const EditForumThreadComment = () => {
       .catch();
   }, [ params.id]);
 
-  // Handler for form input changes, updating the forum thread comment state
+
   const handleChange = (e: React.ChangeEvent<any>) => {
     setForumThreadComment({
       ...forumThreadComment,
@@ -75,7 +75,7 @@ const EditForumThreadComment = () => {
     });
   };
 
-  // Handler for form submission, including data validation and API call for updating the comment
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread_comments/update/${params.id}`;
@@ -110,7 +110,7 @@ const EditForumThreadComment = () => {
       .catch((error) => console.log(error.message));
   };
 
-  // Rendering the form for editing a forum thread comment
+
   return (
 
      <Box

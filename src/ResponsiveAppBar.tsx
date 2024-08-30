@@ -28,11 +28,10 @@ import {
   Tooltip,
   useTheme,
 } from "@mui/material";
-import { useContext, useMemo,useEffect } from "react";
+import { useContext, useMemo, useEffect } from "react";
 import { ThemeContext } from "./theme/index";
 import EditForumThreadComment from "./EditForumThreadComment";
 
-// Defining constants for navigation and settings options
 const pages = ["About"];
 const settings = [/*"Profile"]; , "Account", "Dashboard",*/ "Logout"];
 
@@ -44,10 +43,8 @@ function ResponsiveAppBar() {
   const theme = useTheme();
   const { switchColorMode } = useContext(ThemeContext);
 
-  // Using UserContext to manage user state
   const { user, setUser } = React.useContext(UserContext);
 
-  // Function to handle logout
   function handleLogout() {
     localStorage.removeItem("token");
     setUser(null);
@@ -63,27 +60,22 @@ function ResponsiveAppBar() {
   }
 
   useEffect(() => {
-    // Check local storage for token
     const token = localStorage.getItem("token");
     if (token) {
-      // Optionally, you can verify the token with the backend here
       fetch(`${process.env.REACT_APP_BACKEND_API_URL}/api/v1/users/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }).then((response) => response.json()).then((data) => {
-        // console.log(data,"user data");
-        setUser(data);
-
-      });
-          
-     
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(data,"user data");
+          setUser(data);
+        });
     }
   }, []);
 
-
-  // State hooks for managing menu anchor elements
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -91,7 +83,6 @@ function ResponsiveAppBar() {
     null
   );
 
-  // Handlers for opening and closing navigation and user menus
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -129,7 +120,7 @@ function ResponsiveAppBar() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                width: "100%", // Ensure the container takes full width of the parent
+                width: "100%",
               }}
             >
               {/* Logo */}
@@ -140,7 +131,7 @@ function ResponsiveAppBar() {
                   width: 50,
                   maxHeight: { xs: 233, md: 167 },
                   maxWidth: { xs: 350, md: 250 },
-                  marginRight: "8px", // Add some space between the logo and the text
+                  marginRight: "8px",
                 }}
                 alt="Logo"
                 src={process.env.PUBLIC_URL + "/AvoLogo.png"}
@@ -213,8 +204,6 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-         
-          
 
           <Box sx={{ flexGrow: 2, flexDirection: "row" }}></Box>
 
@@ -232,13 +221,12 @@ function ResponsiveAppBar() {
                 )}
               </IconButton>
             </Tooltip>
-          
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             {user ? (
               <>
-                  {/* <Tooltip title="Settings">
+                {/* <Tooltip title="Settings">
               <IconButton
                 sx={{ mr: 1 }}
                 color="inherit"
@@ -251,7 +239,9 @@ function ResponsiveAppBar() {
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt={user.username} src={user.avatar || ""}>
-                      {user.username != undefined?user.username.charAt(0):""}
+                      {user.username != undefined
+                        ? user.username.charAt(0)
+                        : ""}
                     </Avatar>
                   </IconButton>
                 </Tooltip>

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    // Box component used as the outer container with full viewport width and height
     <Box
       sx={{
         width: "100vw",
@@ -26,8 +25,7 @@ const Home = () => {
             Curvify
           </Typography>
           <Typography variant="h5" paragraph color="text.secondary">
-            Make mutually beneficial exchanges in by trading or using AvoCurve
-            coins.
+            Curvify is a platform for students to trade textbooks and notes.
           </Typography>
           <Box sx={{ my: 4 }}>
             <Button

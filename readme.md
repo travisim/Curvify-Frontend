@@ -1,33 +1,40 @@
 # Curvify frontend
 
+#### Description
 
-#### Description:
-Frontend for the curvify website  
-uses MUI  
-works with backend: github.com/travisim/Curvify-Backend/
+Frontend for the curvify website
 
-### Warning 
-Developed and tested on macOS Sonoma 
+React typescript
+MUI
+
+### Warning
+
+Developed and tested on macOS Sonoma
 
 ## Instructions
-### pre-requisites
-Install homebrew  
 
-### Step 1  
+### pre-requisites
+
+Install homebrew
+
+### Step 1
+
 Clone repository
 
 ```
-git clone https://github.com/travisim/Curvify-Frontend.git
+git clone
 ```
 
-
 ### Step 2
-Install npm 
+
+Install npm
 
 ```
 brew install npm
 ```
+
 ### Step 3
+
 Install bundles using npm
 
 ```
@@ -35,6 +42,7 @@ npm install
 ```
 
 ### Step 4
+
 Start frontend
 
 ```

@@ -110,9 +110,6 @@ const ForumThread = (): JSX.Element => {
       .catch(() => navigate("/forumThreads"));
   }, [params.id, navigate]);
 
-  // const token = (
-  //   document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
-  // ).content;
 
   const addHtmlEntities = (str: string): string => {
     return String(str).replace(/&lt;/g, "<").replace(/&gt;/g, ">");
@@ -120,10 +117,7 @@ const ForumThread = (): JSX.Element => {
 
   const deleteForumThread = (): void => {
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/destroy/${params.id}`;
-    // const token = (
-    //   document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
-    // ).content;
-
+ 
     fetch(url, {
       method: "DELETE",
       headers: {
@@ -145,9 +139,7 @@ const ForumThread = (): JSX.Element => {
 
   const deleteForumThreadComments = (id: number): void => {
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread_comments/destroy/${id}`;
-    // const token = (
-    //   document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
-    // ).content;
+
     fetch(url, {
       method: "DELETE",
       headers: {

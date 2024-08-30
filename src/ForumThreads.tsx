@@ -15,7 +15,7 @@ import {
   Grid,
 } from "@mui/material";
 
-// Defining the structure of a forum thread object
+
 interface ForumThreadStorage {
   id: number;
   title: string;
@@ -25,16 +25,16 @@ interface ForumThreadStorage {
 }
 
 const ForumThreads = (): JSX.Element => {
-  const navigate = useNavigate(); // Hook for programmatically navigating between routes
-  // State hooks for managing forum threads and the current category filter
+  const navigate = useNavigate(); 
+
   const [forumThreads, setForumThreads] = useState<JSX.Element[]>([]);
   const [currentFilter, setCurrentFilter] = useState<string>("All");
   // const { user, setUser } = useContext(UserContext);
 
-  // Fetching forum threads from the backend on component mount
+
   useEffect(() => {
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/index`;
-    // Function to determine the content based on the fetched forum threads
+
     function ForumThreadDeterminer(forumThread: ForumThreadStorage[]): any {
       if (forumThread.length > 0) {
         return generateForumThreadHTML(forumThread);
@@ -43,7 +43,7 @@ const ForumThreads = (): JSX.Element => {
       }
     }  
 
-    // Placeholder content when no forum threads are available
+
     const NoForumThreadHTML = (
       <Box
         display="flex"
@@ -55,7 +55,7 @@ const ForumThreads = (): JSX.Element => {
       </Box>
     );
 
-    // Fetching forum threads and updating state or handling errors
+
     fetch(url)
       .then((res) => {
         if (res.ok) {
@@ -66,10 +66,10 @@ const ForumThreads = (): JSX.Element => {
       .then((res) => setForumThreads(ForumThreadDeterminer(res)))
       .catch(
         () => setForumThreads([NoForumThreadHTML]) /*navigate("/forumThreads")*/
-      ); // should be navigate("/error") but we don't have an error page
+      );
   }, []);
 
-  // Function to fetch forum threads by category
+  
   function fetchForumThreadsByCategory(category: string): void {
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/forum_thread/showForumThreadsByCategory/${category}`;
     function ForumThreadDeterminer(forumThread: ForumThreadStorage[]): any {
@@ -80,14 +80,14 @@ const ForumThreads = (): JSX.Element => {
       }
     }
 
-    // Placeholder content when no forum threads are available in the selected category
+   
     const NoForumThreadHTMLCategory = (
       <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
         <h4>No Posts In This Category yet.</h4>
       </div>
     );
 
-    // Fetching forum threads by category and updating state or handling errors
+   
     fetch(url)
       .then((res) => {
         if (res.ok) {
@@ -98,17 +98,17 @@ const ForumThreads = (): JSX.Element => {
       .then((res) => {
         setForumThreads(ForumThreadDeterminer(res));
       })
-      .catch(); // Placeholder for error handling
+      .catch();
   }
 
-  // Handler for changing the category filter
+
   function FilterbyCategory(event: React.ChangeEvent<any>): void {
     setCurrentFilter(event.target.value);
     fetchForumThreadsByCategory(event.target.value);
   }
 
 
-  // Function to generate JSX elements for displaying forum threads
+
   function generateForumThreadHTML(
     forumThreads: ForumThreadStorage[]
   ): JSX.Element[] {
@@ -155,7 +155,7 @@ const ForumThreads = (): JSX.Element => {
   //   </Box>
   // );
 
-  // Rendering the component with a filter for categories and the list of forum threads
+ 
   return (
     <>
       <Box sx={{ bgcolor: "background.paper", pt: 8, pb: 6, height: "100%" }}>

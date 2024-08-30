@@ -14,56 +14,54 @@ import { useTheme } from "@mui/material/styles";
 import { UserContext } from "./App";
 
 const SignUp = () => {
-  const navigate = useNavigate(); // Hook to navigate between routes
-  const [name, setName] = useState<string>(""); // State for storing name input
-  const [username, setUsername] = useState<string>(""); // State for storing username input
-  const [email, setEmail] = useState<string>(""); // State for storing email input
-  const [password, setPassword] = useState<string>(""); // State for storing password input
-  const [password_confirmation, setPasswordConfirmation] = useState<string>(""); // State for storing password confirmation input
-  const [isUserCreated, setIsUserCreated] = useState<boolean>(false); // State to track if user creation was successful
-  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false); // State to control Snackbar visibility
-  const [errorMessage, setErrorMessage] = useState<string>(""); // State to store error messages
+  const navigate = useNavigate(); 
+  const [name, setName] = useState<string>(""); 
+  const [username, setUsername] = useState<string>(""); 
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>(""); 
+  const [password_confirmation, setPasswordConfirmation] = useState<string>("");
+  const [isUserCreated, setIsUserCreated] = useState<boolean>(false); 
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false); 
+  const [errorMessage, setErrorMessage] = useState<string>(""); 
   
-    const { user, setUser } = useContext(UserContext); // Using context to access and set user state
-  const validateEmail = (email) => { // Function to validate email format
+    const { user, setUser } = useContext(UserContext); 
+  const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase()) && email.endsWith("@u.nus.edu");
   };
-  const onChange = ( // Generic onChange handler for form inputs
+  const onChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     setFunction: React.Dispatch<React.SetStateAction<string>>
   ) => {
     setFunction(event.target.value);
   };
 
-  const onSubmit = ( // Handler for form submission
+  const onSubmit = ( 
     event: React.FormEvent<HTMLFormElement | HTMLTextAreaElement>
   ) => {
     event.preventDefault();
-    if (password !== password_confirmation) { // Check if passwords match
-      setErrorMessage("Passwords do not match."); // Set error message
-      setSnackbarOpen(true); // Open the Snackbar
+    if (password !== password_confirmation) { 
+      setErrorMessage("Passwords do not match."); 
+      setSnackbarOpen(true); 
       return;
     }
 
-    if (!validateEmail(email)) { // Validate email format
+    if (!validateEmail(email)) {
       setErrorMessage("Invalid email format. Email must end with @u.nus.edu");
       setSnackbarOpen(true);
       return;
     }
     const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/v1/users/create`;
     if (username.length === 0) return;
-    const signInContent = { // Object to send in the POST request
+    const signInContent = { 
       username,
       name,
       email,
       password,
       password_confirmation,
     };
-    // const token = document
-    //   .querySelector('meta[name="csrf-token"]')
-    //   ?.getAttribute("content");
-    fetch(url, { // Fetch API to send POST request to server
+
+    fetch(url, { 
       method: "POST",
       headers: {
         // "X-CSRF-Token": token,
@@ -76,25 +74,25 @@ const SignUp = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data, "data");
-        if (!data.errors) {// Check if there are no errors in response
+        if (!data.errors) {
           setIsUserCreated(true);
-          localStorage.setItem("token", data.token); // Store token in localStorage
-          setUser(data.user); // Update user context
+          localStorage.setItem("token", data.token); 
+          setUser(data.user); 
           setTimeout(() => {
-            navigate(`/forumThreads`); // Navigate to forum threads after 2 seconds
+            navigate(`/forumThreads`); 
           }, 0);
         } else {
-          setErrorMessage(data.errors[0]); // Set error message from response
+          setErrorMessage(data.errors[0]); 
           setSnackbarOpen(true);
         }
       })
-      .catch((error) => { // Catch and handle any errors during fetch
+      .catch((error) => { 
         setErrorMessage(error.message || "An error occurred during sign up.");
         setSnackbarOpen(true);
       });
   };
 
-  function displaySucessfullyCreatedAccountAlert() { // Function to display success alert
+  function displaySucessfullyCreatedAccountAlert() { 
     if (isUserCreated === false) {
       return;
     } else {
@@ -106,14 +104,14 @@ const SignUp = () => {
     }
   }
 
-  const handleCloseSnackbar = ( // Function to handle Snackbar close
+  const handleCloseSnackbar = (
     event?: React.SyntheticEvent,
     reason?: string
   ) => {
     if (reason === "clickaway") {
       return;
     }
-    setSnackbarOpen(false); // Close the Snackbar
+    setSnackbarOpen(false); 
   };
 
   return (
@@ -132,7 +130,7 @@ const SignUp = () => {
           Sign Up
         </Typography>
         <Typography variant="subtitle1" gutterBottom color="text.secondary">
-          Use a NUS email (xxx@u.nus.edu)
+         email
         </Typography>
 
         <Snackbar
